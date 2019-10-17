@@ -1,11 +1,12 @@
-https://leetcode.com/problems/implement-strstr/
+[Leetcode](https://leetcode.com/problems/implement-strstr/)
 
-Problem: 
-Implement strStr().
-Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+#Problem: 
+###Implement strStr().
+###Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 
-10/16/2019 Java
+##10/16/2019 Java
 
+```java
 class Solution {
     public int strStr(String haystack, String needle) {
         if(needle.length() == 0)
@@ -27,3 +28,4 @@ class Solution {
         return -1;
     }
 }
+```
