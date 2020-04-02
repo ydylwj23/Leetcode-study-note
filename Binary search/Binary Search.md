@@ -13,7 +13,7 @@ Most of the time, we are asked to find the 1 and only 1 element in the list that
 ```java
 class Solution {
     public int binarySearch(int[] nums, int target) {
-        int l = 0, r = nums.length;
+        int l = 0, r = nums.length - 1;
         while(l < r){
             int m = l + (r - l) / 2;
             //this is the condition f(m) that only 1 element should meet in the list. The search range in such a template is [l, r)
@@ -39,7 +39,7 @@ In this code, we use f(m) condition to pinpoint the only element that meets the 
 ```java
 class Solution {
     public int binarySearch(int[] nums, int target) {
-        int l = 0, r = nums.length;
+        int l = 0, r = nums.length - 1;
         while(l < r){
             int m = l + (r - l) / 2;
             //this is the condition g(m) that a range of elements should meet. The search range here is [l, r)
