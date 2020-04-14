@@ -186,60 +186,58 @@ Union Find(DSU): 1. Can group(separate with other) components in undirected grap
 # Standard Topology Sort
 ```java
 class Solution {
-    public boolean possibleBipartition(List<int[]> edges, int N) {
-        //iterate through all edges to build DSU
-        DSU dsu = new DSU(N);
-        for(var e : edges){
-            //union can return boolean here to detect cycles
-            union(e[0], e[1]);
-        }
-        
-        //do things according to problem's request
-        //for example we can easily compute how groups are there
-        int group = 0;
-        for(int i = 0; i < N; i++){
-            if(dsu.parent[i] == i) group++;
-        }
-    }
-}
+  public int[] topologySort(int N, int[][] edges) {
+    //build the graph, store in-degress
+    Map<Integer, List<Integer>> adjList = new HashMap<Integer, List<Integer>>();
+    int[] indegree = new int[numCourses];
+    for (var edge : edges) {
+        int from = edge[0];
+        int to = edge[1];
+        adjList.computeIfAbsent(from, x -> new ArrayList<Integer>()).add(to);
 
-//Disjoint Set Union data structure
-class DSU{
-    int[] parent;
-    int[] rank;
-    public DSU(int n){
-        parent = new int[n];
-        //initial parents are themselves
-        for(int i = 0; i < n; i++){
-            parent[i] = i;
-        }
-        rank = new int[n];
+        // Record in-degree of each vertex
+        indegree[to]++;
     }
-    public int find(int i){
-        //recursion path compression
-        if(parent[i] != i) parent[i] = find(parent[i]);
-        return parent[i];
-    }
-    public boolean union(int x, int y){
-        int rootx = find(x);
-        int rooty = find(y);
-        //failed union
-        if(root == rooty){
-            return false;
-        }
-        //union according to ranks
-        if(rank[rootx] < rank[rooty]){
-            parent[rootx] = rooty;
-        }else if(rank[rootx] > rank[rooty]){
-            parent[rooty] = rootx;
-        }else{
-            parent[rootx] = rooty;
-            rank[rooty]++;
-        }
-        return true;  
-    }
-}
 
+    // Add all nodes with 0 in-degree to the queue to start the topology sort
+    Queue<Integer> q = new LinkedList<Integer>();
+    for (int i = 0; i < N; i++) {
+        if (indegree[i] == 0) {
+            q.add(i);
+        }
+    }
+
+    //record the sorted order if needed
+    int[] topologicalOrder = new int[numCourses];
+    int index = 0;
+    // Process until the q becomes empty
+    while (!q.isEmpty()) {
+        int cur = q.poll();
+        //update the order
+        topologicalOrder[index++] = node;
+
+        // Reduce the in-degree of each next node by 1
+        if (adjList.containsKey(node)) {
+            for (Integer neighbor : adjList.get(node)) {
+                indegree[neighbor]--;
+
+                // If in-degree of a neighbor becomes 0, add it to the q
+                if (indegree[neighbor] == 0) {
+                    q.add(neighbor);
+                }
+            }
+        }
+    }
+
+    // Number node sorted can reveal if there's a cycle in the directed graph
+    if (index == numCourses) {
+        return topologicalOrder;
+    }
+
+    //sort failed because there's a cycle
+    return new int[0];
+  }
+}
 ```
 ## Notes
 Union Find(DSU): 1. Can group(separate with other) components in undirected graph. Sometimes paired with HashMap to solve advanced grouping problems. 2. Cycle detection in undirected graph.
