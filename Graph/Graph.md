@@ -120,27 +120,86 @@ class Solution {
 ## Notes
 DFS: 1. Can visit connected nodes in certain components, used to compute size of certain components, each node's visited status in certain components, alter status of certain components, check if some nodes are in the same component in a unweighted undirected(occationally directed with pruning, not recommended) graph. 2. Can be used to perform graph coloring/bipartite directed or undirected unweighted graph. 3. Can detect cycles in directed unweighted graph when paired with "unvisited, visiting, visted" status records.
 
-## DFS: 
-# Standard DFS
+## DSU: 
+# Standard DSU
 ```java
 class Solution {
     public boolean possibleBipartition(List<int[]> edges, int N) {
-        //build the graph(adjacency list) from edges if possible
-        Map<Integer, List<Integer>> graph = new HashMap<>();
+        //iterate through all edges to build DSU
+        DSU dsu = new DSU(N);
         for(var e : edges){
-            graph.computeIfAbsent(e[0]).add(e[1]);
-            graph.computeIfAbsent(e[1]).add(e[0]);
+            //union can return boolean here to detect cycles
+            union(e[0], e[1]);
         }
-        //store different visit status of each node
-        int[] visited = new int[N];
         
-        //perform dfs starting from every node in the graph
+        //do things according to problem's request
+        //for example we can easily compute how groups are there
+        int group = 0;
         for(int i = 0; i < N; i++){
-            //only start DFS on nodes with certain status
-            //do things according the result of the DFS
-            if(visited[i] == 0 && !dfs(graph, visited, i)) return false;
+            if(dsu.parent[i] == i) group++;
         }
-        return true;
+    }
+}
+
+//Disjoint Set Union data structure
+class DSU{
+    int[] parent;
+    int[] rank;
+    public DSU(int n){
+        parent = new int[n];
+        //initial parents are themselves
+        for(int i = 0; i < n; i++){
+            parent[i] = i;
+        }
+        rank = new int[n];
+    }
+    public int find(int i){
+        //recursion path compression
+        if(parent[i] != i) parent[i] = find(parent[i]);
+        return parent[i];
+    }
+    public boolean union(int x, int y){
+        int rootx = find(x);
+        int rooty = find(y);
+        //failed union
+        if(root == rooty){
+            return false;
+        }
+        //union according to ranks
+        if(rank[rootx] < rank[rooty]){
+            parent[rootx] = rooty;
+        }else if(rank[rootx] > rank[rooty]){
+            parent[rooty] = rootx;
+        }else{
+            parent[rootx] = rooty;
+            rank[rooty]++;
+        }
+        return true;  
+    }
+}
+
+```
+## Notes
+Union Find(DSU): 1. Can group(separate with other) components in undirected graph. Sometimes paired with HashMap to solve advanced grouping problems. 2. Cycle detection in undirected graph.
+
+## Topology Sort: 
+# Standard Topology Sort
+```java
+class Solution {
+    public boolean possibleBipartition(List<int[]> edges, int N) {
+        //iterate through all edges to build DSU
+        DSU dsu = new DSU(N);
+        for(var e : edges){
+            //union can return boolean here to detect cycles
+            union(e[0], e[1]);
+        }
+        
+        //do things according to problem's request
+        //for example we can easily compute how groups are there
+        int group = 0;
+        for(int i = 0; i < N; i++){
+            if(dsu.parent[i] == i) group++;
+        }
     }
 }
 
