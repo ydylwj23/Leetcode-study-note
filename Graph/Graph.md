@@ -429,3 +429,208 @@ Floyd Warshall: 1. A advanced Bellman Ford algorithm to find the shortest path f
 
 Time complexity: O(N^3)  N^3 for the 3 nested loops\
 Space complexity: O(N^2)  N^2 for the 2D array
+
+## Eulerian Path
+# Standard Eulerian Path
+```java
+class Solution {
+    public List<String> EulerianPath(List<List<String>> edges, String src) {
+        List<String> ans = new ArrayList<>();
+        //build the graph using hashmap and priority queue
+        Map<String, PriorityQueue<String>> graph = new HashMap<>();
+        for(var edge : edges){
+            String from = edge.get(0), to = edge.get(1);
+            graph.computeIfAbsent(from, x -> new PriorityQueue<>()).add(to);
+            graph.computeIfAbsent(to, x -> new PriorityQueue<>());
+        }
+        //use recursion to travser the graph in post order like a tree
+        postOrder(src, ans, graph);
+        //reversed the traverse result is the right order of Eulerian Path
+        Collections.reverse(ans);
+        return ans;
+    }
+    public void postOrder(String cur, List<String> ans, Map<String, PriorityQueue<String>> graph){
+        PriorityQueue<String> children = graph.get(cur);
+        //the priority queue helps to use greedy order to recursively visit children
+        while(!children.isEmpty()){
+            //every visited child is polled from the heap
+            postOrder(children.poll(), ans, graph);
+        }
+        ans.add(cur);
+    }
+}
+```
+
+## Notes
+Euler path: 1. This is a greedy path to traverse through all the nodes with given edges(no repeats). Can be computed by treating the direted graph as a binary tree.
+
+Time complexity: O((E/2)log(E/2)) worst case is a star shape where the src is in the middle. The sorting of half of the edges(the half that are from src to every other node, the other half are the way back) will dominate the time complexity\
+Space complexity: O(2E + V)  E + V for the graph, E for the traverse stack height
+
+## Eulerian Path
+# Standard Eulerian Path
+```java
+class Solution {
+    public List<String> EulerianPath(List<List<String>> edges, String src) {
+        List<String> ans = new ArrayList<>();
+        //build the graph using hashmap and priority queue
+        Map<String, PriorityQueue<String>> graph = new HashMap<>();
+        for(var edge : edges){
+            String from = edge.get(0), to = edge.get(1);
+            graph.computeIfAbsent(from, x -> new PriorityQueue<>()).add(to);
+            graph.computeIfAbsent(to, x -> new PriorityQueue<>());
+        }
+        //use recursion to travser the graph in post order like a tree
+        postOrder(src, ans, graph);
+        //reversed the traverse result is the right order of Eulerian Path
+        Collections.reverse(ans);
+        return ans;
+    }
+    public void postOrder(String cur, List<String> ans, Map<String, PriorityQueue<String>> graph){
+        PriorityQueue<String> children = graph.get(cur);
+        //the priority queue helps to use greedy order to recursively visit children
+        while(!children.isEmpty()){
+            //every visited child is polled from the heap
+            postOrder(children.poll(), ans, graph);
+        }
+        ans.add(cur);
+    }
+}
+```
+
+## Notes
+Euler path: 1. This is a greedy path to traverse through all the nodes with given edges(no repeats). Can be computed by treating the direted graph as a binary tree.
+
+Time complexity: O((E/2)log(E/2)) worst case is a star shape where the src is in the middle. The sorting of half of the edges(the half that are from src to every other node, the other half are the way back) will dominate the time complexity\
+Space complexity: O(2E + V)  E + V for the graph, E for the traverse stack height
+
+## Tarjan
+# Tarjan for bridges
+```java
+class Solution {
+    List<List<Integer>> ans;
+    boolean[] visited;
+    int[] id;
+    int[] low;
+    int idCount;
+    public List<List<Integer>> TarjanBridge(int n, List<List<Integer>> edges) {
+        ans = new ArrayList<>();
+        //build the graph
+        List<Integer>[] graph = new ArrayList[n];
+        for(int i = 0; i < n; i++) graph[i] = new ArrayList<>();
+        for(var edge : edges){
+            graph[edge.get(0)].add(edge.get(1));
+            graph[edge.get(1)].add(edge.get(0));
+        }
+        //use array to store visited map, each node's id and its low-link value
+        visited = new boolean[n];
+        id = new int[n];
+        low = new int[n];
+        //start with id 0 and a random node we traverse through the graph using Tarjan Algorithm to find all bridges
+        idCount = 0;
+        DFS(graph, 0, -1);
+        return ans;
+    }
+    private void DFS(List<Integer>[] graph, int cur, int parent){
+        //update current node's id, low-link value and visited state
+        id[cur] = idCount++;
+        visited[cur] = true;
+        low[cur] = id[cur];
+        //recursively DFS all possible children
+        for(var to : graph[cur]){
+            //cannot go back to parent
+            if(to == parent) continue;
+            //if the child is not visited, it's a forward edge
+            if(!visited[to]){
+                //recursion
+                DFS(graph, to, cur);
+                //update low-link value
+                low[cur] = Math.min(low[cur], low[to]);
+                //if current node's id is smaller than child's low-link value, it means there's no backward edge to the current node's component if the bridge is to be cut
+                if(id[cur] < low[to]){
+                    ans.add(new ArrayList<>(Arrays.asList(cur, to)));
+                }
+            }
+            //if the child is visited, it's a backward edge
+            else{
+                //update low-link value
+                low[cur] = Math.min(low[cur], id[to]);
+            }
+        }
+    }
+}
+```
+
+# Tarjan for articulation point
+```java
+class Solution {
+    boolean[] visited;
+    boolean[] isArt;
+    int[] id;
+    int[] low;
+    int idCount;
+    int outEdgeCount;
+    public int[] TarjanArticulationPoint(int n, List<List<Integer>> edges) {
+        ans = new ArrayList<>();
+        //build the graph
+        List<Integer>[] graph = new ArrayList[n];
+        for(int i = 0; i < n; i++) graph[i] = new ArrayList<>();
+        for(var edge : edges){
+            graph[edge.get(0)].add(edge.get(1));
+            graph[edge.get(1)].add(edge.get(0));
+        }
+        //use array to store visited map, each node's id and its low-link value
+        visited = new boolean[n];
+        id = new int[n];
+        low = new int[n];
+        //answer indication array
+        isArt = new boolean[n];
+        //start with id 0 and a random node(outgoing edge count starts with 0) we traverse through the graph using Tarjan Algorithm to find all bridges
+        idCount = 0;
+        outEdgeCount = 0;
+        DFS(graph, 0, -1);
+        //if the the starting node has more than one out going node, it's an articulation point
+        isArt[0] = outEdgeCount > 1;
+        return isArt;
+    }
+    private void DFS(List<Integer>[] graph, int cur, int parent){
+        //update source out going edge count
+        if(parent == 0) outEdgeCount++;
+        //update current node's id, low-link value and visited state
+        id[cur] = idCount++;
+        visited[cur] = true;
+        low[cur] = id[cur];
+        //recursively DFS all possible children
+        for(var to : graph[cur]){
+            //cannot go back to parent
+            if(to == parent) continue;
+            //if the child is not visited, it's a forward edge
+            if(!visited[to]){
+                //recursion
+                DFS(graph, to, cur);
+                //update low-link value
+                low[cur] = Math.min(low[cur], low[to]);
+                //articulation point found via bridge
+                if(id[cur] < low[to]){
+                    isArt[cur] = true;
+                }
+                //articulation point found via cycle
+                if(id[cur] == low[to]){
+                    isArt[cur] = true;
+                }
+            }
+            //if the child is visited, it's a backward edge
+            else{
+                //update low-link value
+                low[cur] = Math.min(low[cur], id[to]);
+            }
+        }
+    }
+}
+```
+
+## Notes
+Tarjan: 1. Can be used to find bridges in an undirected graph. 2. Can be used to find articulation points in an undirected graph.
+
+Time complexity: O(E + V) E for building the graph, V for DFS the graph\
+Space complexity: O(E + V)  E + V for the graph
