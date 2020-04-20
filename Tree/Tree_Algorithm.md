@@ -5,7 +5,11 @@ Tree
 ```
 Common type of problems in tree:
 
+Depth problem: traverse the tree and use global variable to manage max depth
+
 Special order traversal:
+
+Modify tree structue: Divide and Conquer, return subtree structure
 
 Path Sum: 
 
