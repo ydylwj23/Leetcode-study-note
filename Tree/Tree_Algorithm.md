@@ -5,7 +5,7 @@ Tree
 ```
 Common algorithm for tree problems: 
 
-1. traversal: use proper traverse order to traverse the tree, usually need to maintain a global status or pass status using parameters; 
+1. traversal: use proper traverse order to traverse the tree, usually need to maintain global status or pass status using parameters; 
 
 2. divide and conquer: each subtree will return something for the parent level to do judgement.
 
