@@ -3,17 +3,24 @@ Tree
 
 ## Problem description
 ```
+Common algorithm for tree problems: 
+
+1. traversal: use proper traverse order to traverse the tree, usually need to maintain a global status or pass status using parameters; 
+
+2. divide and conquer: each subtree will return something for the parent level to do judgement.
+
+
 Common type of problems in tree:
 
-Depth problem: traverse the tree and use global variable to manage max depth
+Depth problem: traverse the tree and use global variable to manage current max depth
 
-Special order traversal:
+Special order traversal: 1. BFS is good for level by level order. 2. Mix use of preorder, inorder, postorder DFS
 
-Modify tree structue: Divide and Conquer, return subtree structure
+Modify tree structue: Divide and Conquer, return modified subtree structure
 
-Path Sum: 
+Path problem: 1. Any path: Divide and conquer, subtree contribution might need to be handled differently 2. Root to leaf: DFS backtracking
 
-Lowest Common Ancestor:
+Lowest Common Ancestor: Divide and conquer
 
 Serialize and Deserialize Binary Tree:
 
