@@ -22,6 +22,8 @@ Path problem: 1. Any path: Divide and conquer, subtree contribution might need t
 
 Lowest Common Ancestor: Divide and conquer
 
+BST: 1. divide and conquer: use the property of BST to locate a number in O(H) time. 2. inorder traversal: In a BST, inorder traversal should always be ascending order.
+
 Serialize and Deserialize Binary Tree:
 
 ```
