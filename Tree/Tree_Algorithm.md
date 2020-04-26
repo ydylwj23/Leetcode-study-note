@@ -27,7 +27,7 @@ BST: 1. divide and conquer: use the property of BST to locate a number in O(H) t
 Serialize and Deserialize Binary Tree:
 
 ```
-### DFS: 
+### Traversal: 
 ## Preorder
 # recursion
 ```java
