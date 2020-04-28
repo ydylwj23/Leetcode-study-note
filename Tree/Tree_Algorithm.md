@@ -24,7 +24,9 @@ Lowest Common Ancestor: Divide and conquer
 
 BST: 1. divide and conquer: use the property of BST to locate a number in O(H) time. 2. inorder traversal: In a BST, inorder traversal should always be ascending order. 3. Implement API: Isvalid(), Contains(), Insert(), Delete()
 
-Serialize and Deserialize Binary Tree: 1. To separate each node in the serialized form, We need delimiters. 2. To store info about the tree structure, we also need to include null node. 3. We can encode integer to 4 bytes instead of string to save space.
+Construct a tree from traversal list: 1. Two order list: Use the order of the list to construct, and hashmap to query the other list for a range of index. 2. Preorder + BST: Use preorder to construct the tree, pass value range as parameters to determine if a node should be inserted at a location.
+
+Serialize and Deserialize Binary Tree: 1. To separate each node in the serialized form, We need delimiters. 2. To store info about the tree structure, we also need to include null node. 3. We can encode integer to 4 bytes instead of string to save space. 4. For a BST, we don't need to mark null to store tree structure info. If we encode integer to 4 bytes so they are unisize, we won't need delimiters either.
 
 ```
 ### Traversal: 
