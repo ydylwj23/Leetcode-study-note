@@ -18,13 +18,13 @@ Special order traversal: 1. BFS is good for level by level order. 2. Mix use of 
 
 Modify tree structue: Divide and Conquer, return modified subtree structure
 
-Path problem: 1. Any path: Divide and conquer, subtree contribution might need to be handled differently 2. Root to leaf: DFS backtracking
+Path sum problem: 1. Number or collection of path sum: DFS backtracking. 2. Min Max path sum: Divide and conquer, we need to determine each subtree contribution and update the global variables
 
 Lowest Common Ancestor: Divide and conquer
 
-BST: 1. divide and conquer: use the property of BST to locate a number in O(H) time. 2. inorder traversal: In a BST, inorder traversal should always be ascending order.
+BST: 1. divide and conquer: use the property of BST to locate a number in O(H) time. 2. inorder traversal: In a BST, inorder traversal should always be ascending order. 3. Implement API: Isvalid(), Contains(), Insert(), Delete()
 
-Serialize and Deserialize Binary Tree:
+Serialize and Deserialize Binary Tree: 1. To separate each node in the serialized form, We need delimiters. 2. To store info about the tree structure, we also need to include null node. 3. We can encode integer to 4 bytes instead of string to save space.
 
 ```
 ### Traversal: 
@@ -122,16 +122,24 @@ class Solution {
 Traversal: Use proper traverse order to traverse the tree, usually need to maintain global status or pass status using parameters
 
 ### Divide and Conquer: 
-## Collect info from children
+## Collect info from both subtrees
 ```java
 class Solution {
-  public TreeNode pruneTree(TreeNode root) {
-    if (root == null) return root;
-    //divide an
-    root.left = pruneTree(root.left);
-    root.right = pruneTree(root.right);
-    return (root.val == 1 || root.left != null || root.right != null) ? root : null;
-  }
+    public boolean isBalanced(TreeNode root) {
+        //divide and conquer
+        return helper(root) >= 0;
+    }
+    private int helper(TreeNode root){
+        //base case
+        if(root == null) return 0;
+        //get subtree heights from children
+        int left = helper(root.left);
+        int right = helper(root.right);
+        //-1 means the subtree is not balanced
+        if(left < 0 || right < 0) return -1;
+        //compare subtree heights to report an unbalance or the current tree height
+        return Math.abs(left - right) > 1 ? -1 : Math.max(left, right) + 1;
+    }
 }
 ```
 
@@ -150,4 +158,43 @@ class Solution {
 ```
 
 ## Notes
-Divide and conquer: each subtree will return something for the parent
+Divide and conquer: Each child subtree will return something for its parent. Some logic will be done on the parent level, then the parent will return new info to its parent.
+
+### Divide and Conquer: 
+## Collect info from both subtrees
+```java
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        //divide and conquer
+        return helper(root) >= 0;
+    }
+    private int helper(TreeNode root){
+        //base case
+        if(root == null) return 0;
+        //get subtree heights from children
+        int left = helper(root.left);
+        int right = helper(root.right);
+        //-1 means the subtree is not balanced
+        if(left < 0 || right < 0) return -1;
+        //compare subtree heights to report an unbalance or the current tree height
+        return Math.abs(left - right) > 1 ? -1 : Math.max(left, right) + 1;
+    }
+}
+```
+
+## Change tree structure
+```java
+class Solution {
+  public TreeNode pruneTree(TreeNode root) {
+    if (root == null) return root;
+    //divide and conquer
+    root.left = pruneTree(root.left);
+    root.right = pruneTree(root.right);
+    //return a node to represent the entire subtree after changes
+    return (root.val == 1 || root.left != null || root.right != null) ? root : null;
+  }
+}
+```
+
+## Notes
+Divide and conquer: Each child subtree will return something for its parent. Some logic will be done on the parent level, then the parent will return new info to its parent.
