@@ -162,41 +162,55 @@ class Solution {
 ## Notes
 Divide and conquer: Each child subtree will return something for its parent. Some logic will be done on the parent level, then the parent will return new info to its parent.
 
-### Divide and Conquer: 
-## Collect info from both subtrees
+### Common problems: 
+## Max Path Sum
 ```java
 class Solution {
-    public boolean isBalanced(TreeNode root) {
-        //divide and conquer
-        return helper(root) >= 0;
+    //global variable
+    int maxSum = Integer.MIN_VALUE;
+
+    public int maxPathSum(TreeNode root) {
+        helper(root);
+        return this.maxSum;
     }
     private int helper(TreeNode root){
         //base case
         if(root == null) return 0;
-        //get subtree heights from children
-        int left = helper(root.left);
-        int right = helper(root.right);
-        //-1 means the subtree is not balanced
-        if(left < 0 || right < 0) return -1;
-        //compare subtree heights to report an unbalance or the current tree height
-        return Math.abs(left - right) > 1 ? -1 : Math.max(left, right) + 1;
+        //calculate left and right children's best contribution
+        int leftMax = Math.max(helper(root.left), 0);
+        int rightMax = Math.max(helper(root.right), 0);
+        //calculate the max path sum when connecting left and right branch through node
+        int maxLeftRight = leftMax + rightMax + root.val;
+        //update the total max path sum
+        this.maxSum = Math.max(maxLeftRight, this.maxSum);
+        //return the current tree's best contribution
+        return Math.max(leftMax + root.val, rightMax + root.val);
+    }
+}
+```
+## Notes
+Use divide and conquer get the sum contribution from each substree, then update the global variable accordingly. Note contribution cannot be less than 0.
+
+## Lowest Common Ancestor
+```java
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        //base case
+        if(root == null) return null;
+        //if the current node is one of the targets, we return the current node
+        if(root == p || root == q) return root;
+        //if the current node's both subtrees return a node, it means the current node is LCA
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if(left != null && right != null) return root;
+        //return whichever subtree that returns a node
+        if(left != null) return left;
+        if(right != null) return right;
+        //this node cannot be LCA if both subtrees don't return nodes
+        return null;
     }
 }
 ```
 
-## Change tree structure
-```java
-class Solution {
-  public TreeNode pruneTree(TreeNode root) {
-    if (root == null) return root;
-    //divide and conquer
-    root.left = pruneTree(root.left);
-    root.right = pruneTree(root.right);
-    //return a node to represent the entire subtree after changes
-    return (root.val == 1 || root.left != null || root.right != null) ? root : null;
-  }
-}
-```
-
 ## Notes
-Divide and conquer: Each child subtree will return something for its parent. Some logic will be done on the parent level, then the parent will return new info to its parent.
+Use divide and conquer to find return the nearest target node from both subtrees. Return the node itself if its both subtrees contain target nodes.
