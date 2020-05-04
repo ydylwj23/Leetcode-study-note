@@ -163,6 +163,32 @@ class Solution {
 Divide and conquer: Each child subtree will return something for its parent. Some logic will be done on the parent level, then the parent will return new info to its parent.
 
 ### Common problems: 
+
+## Traversal
+```java
+class Solution {
+    List<List<Integer>> ans = new ArrayList<>();
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        trim(root);
+        return ans;
+    }
+    private int trim(TreeNode root){
+        //base case
+        if(root == null) return -1;
+        //compute current node's level in relation to its subtree's furthest bottom
+        int level = 1 + Math.max(trim(root.left), trim(root.right));
+        //add more list to the ans
+        if(ans.size() <= level) ans.add(new ArrayList<>());
+        //output current level's val to corresponding level
+        ans.get(level).add(root.val);
+        //root.left = root.right = null;
+        return level;
+    }
+}
+```
+## Notes
+Use proper order to traverse the tree, collect info with global variables or passed down parameters
+
 ## Max Path Sum
 ```java
 class Solution {
@@ -214,3 +240,18 @@ class Solution {
 
 ## Notes
 Use divide and conquer to find return the nearest target node from both subtrees. Return the node itself if its both subtrees contain target nodes.
+
+## Change tree structure
+```java
+class Solution {
+  public TreeNode pruneTree(TreeNode root) {
+    if (root == null) return root;
+    root.left = pruneTree(root.left);
+    root.right = pruneTree(root.right);
+    return (root.val == 1 || root.left != null || root.right != null) ? root : null;
+  }
+}
+```
+
+## Notes
+Use Divide and Conquer, return modified subtree structure
