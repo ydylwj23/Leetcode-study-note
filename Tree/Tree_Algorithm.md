@@ -349,3 +349,79 @@ public class Codec {
 
 ## Notes
 Serialize and Deserialize: 1. To separate each node in the serialized form, We need delimiters. 2. To store info about the tree structure, we also need to include null node. 3. We can encode integer to 4 bytes instead of string to save space. 4. For a BST, we don't need to mark null to store tree structure info. If we encode integer to 4 bytes so they are unisize, we won't need delimiters either.
+
+## BST 
+# Validate
+```java
+class Solution {
+    Integer last = null;
+    public boolean isValidBST(TreeNode root) {
+        //if current node is empty
+        if(root == null) return true;
+        //inorder traversal
+        if(!isValidBST(root.left)) return false;
+        if(last != null && last >= root.val) return false;
+        last = new Integer(root.val);
+        if(!isValidBST(root.right)) return false;
+        return true;
+    }
+}
+```
+# Contains
+```java
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+        //if the current root is the ans
+        if (root == null || root.val == val){return root;}
+        //do the comparison
+        return root.val > val ? searchBST(root.left, val) : searchBST(root.right, val);
+    }
+}
+```
+# Insert
+```java
+class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        //insert is found
+        if (root == null) {return new TreeNode(val);}
+        //recursively try to insert new nodes in subtrees
+        if (root.val < val) root.right = insertIntoBST(root.right, val);
+        else root.left = insertIntoBST(root.left, val);
+        
+        return root;
+    }
+}
+```
+# Delete
+```java
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        //when the node is empty
+        if (root == null) return null;
+        //delete from the right subtree
+        if (key > root.val) root.right = deleteNode(root.right, key);
+        //delete from the left subtree
+        else if (key < root.val) root.left = deleteNode(root.left, key);
+        //delete the current node
+        else{
+            //if the current node has left subtree
+            if (root.left != null){
+                //find the right most child of the left subtree
+                TreeNode rightMost = root.left;
+                while (rightMost.right != null) rightMost = rightMost.right;
+                //connect right subtree to left right most child
+                rightMost.right = root.right;
+                return root.left;
+            }
+            //if left subtree doesn't exist, we can connect the right subtree directly
+            else{
+                return root.right;
+            }
+        }
+        return root;
+    }
+}
+```
+
+## Notes
+BST: 1. divide and conquer: use the property of BST to locate a number in O(H) time. 2. inorder traversal: In a BST, inorder traversal should always be ascending order. 3. Implement API: Isvalid(), Contains(), Insert(), Delete()
