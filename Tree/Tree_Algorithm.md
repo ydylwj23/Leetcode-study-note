@@ -255,3 +255,97 @@ class Solution {
 
 ## Notes
 Use Divide and Conquer, return modified subtree structure
+
+## Contruct tree from traversal list
+```java
+class Solution {
+    Map<Integer, Integer> index;
+    int preIndex = 0;
+    int[] preorder, inorder;
+    public Solution(){
+        index = new HashMap<>();
+    }
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        //build a hash table for inorder element index
+        int counter = 0;
+        for(var i : inorder){
+            index.put(i, counter++);
+        }
+        //pass the input array into the object
+        this.preorder = preorder;
+        this.inorder = inorder;
+        return helper(0, preorder.length - 1);
+    }
+    //preorder recursion helper method
+    private TreeNode helper(int l, int r){
+        //when the range is empty
+        if(l > r) return null;
+        //build the current node
+        int val = preorder[preIndex];
+        TreeNode root = new TreeNode(val);
+        //split the inorder array into 2 and build left and right children
+        int ind = index.get(val);
+        preIndex ++;
+        root.left = helper(l, ind - 1);
+        root.right = helper(ind + 1, r);
+        return root;
+    }
+}
+```
+
+## Notes
+Construct a tree from traversal list: 1. Two order list: Use the order of the list to construct, and hashmap to query the other list for a range of index. 2. Preorder + BST: Use preorder to construct the tree, pass value range as parameters to determine if a node should be inserted at a location.
+
+## Serialize and Deserialize binary tree
+```java
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        //use a stringbuilder to store the result
+        StringBuilder s = new StringBuilder();
+        //use recursion to DFS the tree
+        this.serializeDFS(root, s);
+        return s.toString();
+    }
+    private void serializeDFS(TreeNode root, StringBuilder s){
+        //append 'n' when the node is null
+        if(root == null){
+            s.append("n,");
+            return;
+        }
+        //insert the char into the string
+        s.append(root.val);
+        s.append(',');
+        //recursively handle both children
+        serializeDFS(root.left, s);
+        serializeDFS(root.right, s);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        //split the string with ','
+        String[] dataArray = data.split(",");
+        List<String> dataList = new LinkedList<>(Arrays.asList(dataArray));
+        //use DFS to build the tree
+        return deserializeDFS(dataList);
+    }
+    //recursively build the tree
+    private TreeNode deserializeDFS(List<String> dataList){
+        //base case
+        if(dataList.get(0).equals("n")) {
+            dataList.remove(0);
+            return null;
+        }
+        //create the current node
+        TreeNode root = new TreeNode(Integer.parseInt(dataList.get(0)));
+        dataList.remove(0);
+        root.left = deserializeDFS(dataList);
+        root.right = deserializeDFS(dataList);
+        return root;
+    }
+}
+```
+
+## Notes
+Serialize and Deserialize: 1. To separate each node in the serialized form, We need delimiters. 2. To store info about the tree structure, we also need to include null node. 3. We can encode integer to 4 bytes instead of string to save space. 4. For a BST, we don't need to mark null to store tree structure info. If we encode integer to 4 bytes so they are unisize, we won't need delimiters either.
