@@ -387,7 +387,6 @@ class Solution {
         //recursively try to insert new nodes in subtrees
         if (root.val < val) root.right = insertIntoBST(root.right, val);
         else root.left = insertIntoBST(root.left, val);
-        
         return root;
     }
 }
