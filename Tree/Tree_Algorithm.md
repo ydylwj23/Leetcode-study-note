@@ -294,7 +294,7 @@ class Solution {
 ```
 
 ## Notes
-Construct a tree from traversal list: 1. Two order list: Use the order of the list to construct, and hashmap to query the other list for a range of index. 2. Preorder + BST: Use preorder to construct the tree, pass value range as parameters to determine if a node should be inserted at a location.
+Construct a tree from traversal list: 1. Two order list: (1) Use the order of the list to construct, and hashmap to query the other list for a range of index then use divide and conquer to build subtrees. (2) Sometimes, we can use the order of the list to construct, then use the property of both traversal list to stop the current recursion stack. 2. Preorder + BST: Use preorder to construct the tree, pass value range as parameters to determine if a node should be inserted at a location.
 
 ## Serialize and Deserialize binary tree
 ```java
