@@ -12,7 +12,7 @@ Common algorithm for tree problems:
 
 Common type of problems in tree:
 
-Height or Depth problem: traverse the tree and use global variable to manage current height or depth
+Height or Depth problem: traverse the tree(sometimes divide and conquer) and use global variable to manage current height or depth
 
 Special order traversal: 1. BFS is good for level by level order. 2. Mix use of preorder, inorder, postorder DFS
 
@@ -213,7 +213,7 @@ class Solution {
 }
 ```
 ## Notes
-Traverse the tree and use global variable to manage current height or depth
+Traverse the tree(sometimes divide and conquer) and use global variable to manage current height or depth
 
 ## Max Path Sum
 ```java
