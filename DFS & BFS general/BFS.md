@@ -91,3 +91,93 @@ class Solution {
     }
 }
 ```
+
+# Record node relationship along the path:
+```java
+class Solution {
+    public Map<String, List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        //remove the begin word from the word list
+        Set<String> set = new HashSet<>(wordList);
+        //use hashmap to store visit status and visited steps
+        Map<String, Integer> visited = new HashMap<>();
+        //use hashmap to keep neighbor status
+        Map<String, List<String>> neighbor = new HashMap<>();
+        //use queue to do bfs
+        Queue<String> q = new LinkedList<>();
+        //initial status
+        q.add(beginWord);
+        int step = 0;
+        //flag for if shortest path is found
+        boolean isFound = false;
+        //BFS
+        while(!q.isEmpty()){
+            for(int size = q.size(); size > 0; --size){
+                //poll a node
+                String cur = q.poll();
+                //get all possible neighbors
+                ArrayList<String> neighbors = getNeighbors(cur, set);
+                //find all possible next step words that are not visited and add them into the queue for the next search
+                for(var s : neighbors){
+                    //nodes that are visited but is in the same step of search should also be added into path neighbor list
+                    if((!visited.containsKey(s) || visited.get(s) == step)){
+                        //if the answer is reached, we move on to build the graph after the current search
+                        if(s == endWord) isFound = true;
+                        //only add to the queue if this node is not visited
+                        if(!visited.containsKey(s)) q.add(s);
+                        //update neighbor list
+                        neighbor.computeIfAbsent(cur, x -> new ArrayList<>()).add(s);
+                        //mark as visited with current step
+                        visited.put(s, step);
+                    }
+                }
+            }
+            if(isFound) break;
+            step++;
+        }
+        return neightbor;
+    }
+}
+```
+
+## Notes
+In this example, since we are building the path relation as we do BFS, we cannot just skip visited nodes during 1 layer of search. Instead, if the visited nodes's timestamp is the same as the current step number, which means that the node has just been visited in this layer of search, we still need to use it to expand the path relationship.
+
+# BFS with rolling DP:
+```java
+class Solution {
+    Map<Character, List<Character>> map = new HashMap<>();
+    List<String> ans = new ArrayList<>();
+    public List<String> letterCombinations(String digits) {
+        //corner case
+        if(digits.length() == 0) return ans;
+        //build the number-digit relation map
+        map.put('2', new ArrayList<>(Arrays.asList('a', 'b', 'c')));
+        map.put('3', new ArrayList<>(Arrays.asList('d', 'e', 'f')));
+        map.put('4', new ArrayList<>(Arrays.asList('g', 'h', 'i')));
+        map.put('5', new ArrayList<>(Arrays.asList('j', 'k', 'l')));
+        map.put('6', new ArrayList<>(Arrays.asList('m', 'n', 'o')));
+        map.put('7', new ArrayList<>(Arrays.asList('p', 'q', 'r', 's')));
+        map.put('8', new ArrayList<>(Arrays.asList('t', 'u', 'v')));
+        map.put('9', new ArrayList<>(Arrays.asList('w', 'x', 'y', 'z')));
+        //BFS
+        ans.add("");
+        for(int i = 0; i < digits.length(); i++){
+            //a temparay list to hold all new results
+            List<String> tmp = new ArrayList<>();
+            //for every string built previously
+            for(var s : ans){
+                //add all possible new letter
+                for(var c : map.get(digits.charAt(i))){
+                    tmp.add(s + c);
+                }
+            }
+            //rotate lists, tmp is now the new answer list
+            ans = tmp;
+        }
+        return ans;
+    }
+}
+```
+
+## Notes
+In this example, we are building combination using BFS by rolling two containers. One container stores results from the last search, and the other container stores result of this search as we compute results using the last container.
