@@ -1,54 +1,51 @@
 ## Keyword
-BFS
+DFS
 
 ## Problem description
 ```
-BFS is commonly used to find the shortest path between nodes or between two components in a graph. But in many questions, we can treat point of interest as graph node so we can utilize BFS. A very common structure of BFS algorithm consists of 1: relationship structure between every two nodes 2: visited status holder(array or hash table) 3: a queue for traversing nodes layer by layer 4: step counter.
+DFS is commonly used to implement backtracking algorithm. The problem it can solve includes: Combination; Permutation; Partition. A very common structure of DFS algorithm consists of 1: visited status holder(optional) 2: base case 3: backtracking case
 
 ```
-## BFS: 
-# Standard BFS for graph:
+## DFS: 
+# Combination:
 ```java
 class Solution {
-    public int BFS(List<int[]> edges) {
-        //build the graph(adjacency list) from edges if possible
-        Map<Integer, List<Integer>> graph = new HashMap<>();
-        for(var e : edges){
-            graph.computeIfAbsent(e[0]).add(e[1]);
-            graph.computeIfAbsent(e[1]).add(e[0]);
+    public List<List<Integer>> subsets(int[] nums, int target) {
+        //create the answer list
+        List<List<Integer>> ans = new ArrayList<>();
+        //sort the input array if there are duplicated numbers
+        **Arrays.sort(nums);
+        //call DFS with initial states
+        DFS(nums, ans, new ArrayList<>(), 0, target);
+        return ans;
+    }
+    private void DFS(int[] nums, List<List<Integer>> ans, List<Integer> list, int index, int target){
+        //add the current list to answer in every layer if the target list has no constraints(all subsets)
+        **ans.add(new ArrayList<>(list));
+        //add the current list to answer only if the constraint is satisfied
+        **if (sum == n) {
+            ans.add(new ArrayList<>(list));
         }
-        //A hashmap or array to mark visited nodes
-        Set<Integer> seen = new HashSet<>();
-        //An queue to keep current visiting nodes
-        Queue<Integer> q = new LinkedList<>();
-        //start the search with some nodes
-        q.add(start);
-        seen.add(start);
-        //keep track of steps
-        int step = 0;
-        //BFS loop
-        while(!q.isEmpty()){
-            //1 step a time
-            int size = q.size();
-            for(int i = 0; i < size; i++){
-                int cur = q.poll();
-                //add more nodes for further search
-                for(var nei : graph.get(cur)){
-                    //only add unvisited nodes
-                    if(!seen.contains(nei)){
-                        q.add(nei);
-                        seen.add(nei);
-                    }
-                }
+        
+        //backtracking, start from the first available index
+        for(int i = index; i < nums.length; i++){
+            //when there are duplicates in the input, we have to skip duplicates in the same layer
+            if (i > index && nums[i] == nums[i - 1]) {
+                continue;
             }
-            //update step
-            step++;
+            //add current layer
+            list.add(nums[i]);
+            //index needs to move forward to avoid using the same exact number twice(duplicates are still allowed if there are duplicates in the list)
+            **DFS(nums, ans, list, i + 1, target);
+            //index doesn't move if duplicates in the list are allowed
+            **DFS(nums, ans, list, i, target);
+            //remove current layer
+            list.remove(list.size() - 1);
         }
-        //search fails
-        return -1;
     }
 }
 ```
+
 
 # Standard BFS for matrix:
 ```java
