@@ -5,6 +5,8 @@ BFS
 ```
 BFS is commonly used to find the shortest path between nodes or between two components in a graph. But in many questions, we can treat point of interest as graph node so we can utilize BFS. A very common structure of BFS algorithm consists of 1: relationship structure between every two nodes 2: visited status holder(array or hash table) 3: a queue for traversing nodes layer by layer 4: step counter.
 
+Time complexity: O(n)
+Space complexity: O(n)
 ```
 ## BFS: 
 # Standard BFS for graph:
