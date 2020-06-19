@@ -297,10 +297,11 @@ class Solution {
         Set<Integer> visited = new HashSet<>();
         //Dijkstra Algorithm.
         while(!pq.isEmpty()){
-            int[] c = pq.poll();
+            int[] cur = pq.poll();
             //if the node time is already in the hash table, the recorded time must be shorter than the current time
             if(visited.contains(cur[0])) continue;
-            int cur = c[0], cost = c[1], steps = c[2];
+            visited.add(cur[0]);
+            int cur = cur[0], cost = cur[1], steps = cur[2];
             //best route found
             if(cur == dst){
                 return cost;
@@ -318,7 +319,7 @@ class Solution {
 ## Notes
 Dijkstra: 1. Greedy algorithm to find the shortest path from 1 node to all other nodes in a directed(occationally undirected) weighted graph. 2. Can be paired with extra step info in each node to detect shortest path within certain steps.
 
-Time complexity: O(NlogN + E)  E for building the graph, NlogN for the algorithm\
+Time complexity: O(ElogN + E)  E for building the graph, ElogN for the algorithm\
 Space complexity: O(N + E)  E for the graph, N for the heap
 
 ## Bellman Ford's Algorithm
