@@ -7,6 +7,40 @@ DFS is commonly used to implement backtracking algorithm. The problem it can sol
 
 ```
 ## DFS: 
+# General backtracking:
+```java
+class Solution {
+    public List<List<Integer>> backtracking(int[] nums) {
+        //create the answer list
+        List<List<Integer>> ans = new ArrayList<>();
+        //call DFS with initial states
+        DFS(nums, ans, new ArrayList<>(), 0);
+        return ans;
+    }
+    private void DFS(int[] nums, List<List<Integer>> ans, List<Integer> list, int index){
+        //when a condition is satisfied, add the current traversal path result to the final answer list
+        if (index == n) {
+            ans.add(new ArrayList<>(list));
+        }
+        
+        //backtracking, start from the first available index
+        for(int i = index; i < nums.length; i++){
+            //under certain condition, add the current layer's result to the list
+            list.add(x);
+            //call backtracking for the next layer
+            DFS(nums, ans, list, i + 1);
+            //remove current layer's result
+            list.remove(list.size() - 1);
+        }
+    }
+}
+```
+## Notes
+General backtracking can be used to solve many problems where decision trees are involved. It basically brutefully traverse through every node on the entire decision tree. Prunning can help reduce general run time or even reduce time complexity. Memoization is always commonly used with backtracking so no duplicated condition would be visited.\
+Time Complexity: O(c ^ n) At each level, we need to make c choices\
+Space Complexity: O(c ^ n) Total number of path and contents.
+
+
 # Combination:
 ```java
 class Solution {
