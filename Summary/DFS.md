@@ -1,6 +1,6 @@
 # DFS
 
-## Description
+## **Description**
 DFS stands for Depth First Search, which is also called backtracking. It is a very commonly used search algorithm.\
 The problem it can solve includes:
 - General backtracking problem. 
@@ -8,8 +8,7 @@ The problem it can solve includes:
   -  **Permutation**
   -  **Partition**
   -  **board game placement**
-- 2D grid search problem.
-  - **find island**
+  -  **find island**
 - Tree traverse problem.
   - **Preorder**
   - **Inorder**
@@ -20,42 +19,51 @@ A very common structure of DFS algorithm consists of 1: visited status holder(op
 
 ---
 
-## Coding example: 
-*General backtracking*
+## **Coding example**
+
+## General backtracking problem
+template:
 ```java
 class Solution {
-    public List<List<Integer>> backtracking(int[] nums) {
-        //create the answer list
-        **List<List<Integer>> ans = new ArrayList<>();
-        //call DFS with initial states
-        DFS(nums, ans, new ArrayList<>(), 0);
+    public List<List<Integer>> backtracking(T[] input) {
+        //answer list
+        List<List<T>> ans = new List<>();
+        //current path
+        List<T> path = new List<>();
+        //call DFS with initial index
+        DFS(index, ...);
         return ans;
     }
-    private void DFS(int[] nums, List<List<Integer>> ans, List<Integer> list, int index){
+    private void DFS(int index, ...){
         //when a condition is satisfied, add the current traversal path result to the final answer list
-        if (index == n) {
-            ans.add(new ArrayList<>(list));
+        if (condition) {
+            ans.add(curList);
+            return;
         }
         
         //backtracking, start from the first available index
-        for(int i = index; i < nums.length; i++){
-            //under certain condition, add the current layer's result to the list
-            list.add(x);
-            //call backtracking for the next layer
-            DFS(nums, ans, list, i + 1);
-            //remove current layer's result
-            list.remove(list.size() - 1);
+        for(from index to ...){
+            //under certain condition, make a choice at the current decision node
+            curList.add(x);
+            //call backtracking for the decision node
+            DFS(index + 1, ...);
+            //unmake the the choice
+            curList.remove(x);
         }
     }
 }
 ```
-## Notes
+Note:\
 General backtracking can be used to solve many problems where decision trees are involved. It basically brutefully traverse through every node on the entire decision tree. Prunning can help reduce general run time or even reduce time complexity. Memoization is also commonly used with backtracking so no duplicated condition would be visited again.\
 Time Complexity: O(c ^ n) At each level, we need to make c choices\
 Space Complexity: O(c ^ n) Total number of path and contents.
 
 
-*Combination*
+### *Combination*
+
+The combination problems can be solved by backtracking especially when every possible combinations need to be output as part of the result. Note all the constraints of the problem: 1: If there are duplicates in the input. 2: If duplicate numbers can be used in the answer. 3: If there are constrains on the condition of the output list.\
+Time Complexity: O(2 ^ n) for backtracking since every element may or may not be placed into a list. O(n) for putting every formed list into the asnwer.\
+Space Complexity: O(2 ^ n) to store every single result.
 ```java
 class Solution {
     public List<List<Integer>> subsets(int[] nums, int target) {
@@ -93,12 +101,8 @@ class Solution {
     }
 }
 ```
-## Notes
-The combination problems can be solved by backtracking especially when every possible combinations need to be output as part of the result. Note all the constraints of the problem: 1: If there are duplicates in the input. 2: If duplicate numbers can be used in the answer. 3: If there are constrains on the condition of the output list.\
-Time Complexity: O(2 ^ n) for backtracking since every element may or may not be placed into a list. O(n) for putting every formed list into the asnwer.\
-Space Complexity: O(2 ^ n) to store every single result.
 
-*Permutation*
+-*Permutation*
 ```java
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
