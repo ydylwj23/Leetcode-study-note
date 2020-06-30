@@ -1,18 +1,32 @@
-## Keyword
-DFS
+# DFS
 
-## Problem description
-```
-DFS is commonly used to implement backtracking algorithm. The problem it can solve includes: Combination; Permutation; Partition. A very common structure of DFS algorithm consists of 1: visited status holder(optional) 2: base case 3: backtracking case
+## Description
+DFS stands for Depth First Search, which is also called backtracking. It is a very commonly used search algorithm.\
+The problem it can solve includes:
+- General backtracking problem. 
+  -  **Combination**
+  -  **Permutation**
+  -  **Partition**
+  -  **board game placement**
+- 2D grid search problem.
+  - **find island**
+- Tree traverse problem.
+  - **Preorder**
+  - **Inorder**
+  - **Postorder**
+- Graph traverse problem.
 
-```
-## DFS: 
-# General backtracking:
+A very common structure of DFS algorithm consists of 1: visited status holder(optional) 2: base case 3: backtracking case
+
+---
+
+## Coding example: 
+*General backtracking*
 ```java
 class Solution {
     public List<List<Integer>> backtracking(int[] nums) {
         //create the answer list
-        List<List<Integer>> ans = new ArrayList<>();
+        **List<List<Integer>> ans = new ArrayList<>();
         //call DFS with initial states
         DFS(nums, ans, new ArrayList<>(), 0);
         return ans;
@@ -36,12 +50,12 @@ class Solution {
 }
 ```
 ## Notes
-General backtracking can be used to solve many problems where decision trees are involved. It basically brutefully traverse through every node on the entire decision tree. Prunning can help reduce general run time or even reduce time complexity. Memoization is always commonly used with backtracking so no duplicated condition would be visited.\
+General backtracking can be used to solve many problems where decision trees are involved. It basically brutefully traverse through every node on the entire decision tree. Prunning can help reduce general run time or even reduce time complexity. Memoization is also commonly used with backtracking so no duplicated condition would be visited again.\
 Time Complexity: O(c ^ n) At each level, we need to make c choices\
 Space Complexity: O(c ^ n) Total number of path and contents.
 
 
-# Combination:
+*Combination*
 ```java
 class Solution {
     public List<List<Integer>> subsets(int[] nums, int target) {
@@ -84,7 +98,7 @@ The combination problems can be solved by backtracking especially when every pos
 Time Complexity: O(2 ^ n) for backtracking since every element may or may not be placed into a list. O(n) for putting every formed list into the asnwer.\
 Space Complexity: O(2 ^ n) to store every single result.
 
-# Permutation:
+*Permutation*
 ```java
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
