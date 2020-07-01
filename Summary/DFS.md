@@ -21,8 +21,11 @@ A very common structure of DFS algorithm consists of 1: visited status holder(op
 
 ## **Coding example**
 
-## General backtracking problem
-template:
+### General backtracking problem
+
+General backtracking can be used to solve many problems where decision trees are involved. It basically brutefully traverse through every node on the entire decision tree. Prunning can help reduce general run time or even reduce time complexity. Memoization is also commonly used with backtracking so no duplicated condition would be visited again.\
+Time Complexity: O(c ^ n) At each level, we need to make c choices\
+Space Complexity: O(c ^ n) Total number of path and contents.
 ```java
 class Solution {
     public List<List<Integer>> backtracking(T[] input) {
@@ -53,13 +56,9 @@ class Solution {
     }
 }
 ```
-Note:\
-General backtracking can be used to solve many problems where decision trees are involved. It basically brutefully traverse through every node on the entire decision tree. Prunning can help reduce general run time or even reduce time complexity. Memoization is also commonly used with backtracking so no duplicated condition would be visited again.\
-Time Complexity: O(c ^ n) At each level, we need to make c choices\
-Space Complexity: O(c ^ n) Total number of path and contents.
 
 
-### *Combination*
+#### *Combination*
 
 The combination problems can be solved by backtracking especially when every possible combinations need to be output as part of the result. Note all the constraints of the problem: 1: If there are duplicates in the input. 2: If duplicate numbers can be used in the answer. 3: If there are constrains on the condition of the output list.\
 Time Complexity: O(2 ^ n) for backtracking since every element may or may not be placed into a list. O(n) for putting every formed list into the asnwer.\
@@ -89,7 +88,7 @@ class Solution {
             **if (i > index && nums[i] == nums[i - 1]) {
                 **continue;
             **}
-            //add current layer
+            //add current layer's number
             list.add(nums[i]);
             //index needs to move forward to avoid using the same exact number twice(duplicates are still allowed if there are duplicates in the list)
             **DFS(nums, ans, list, i + 1, target);
@@ -102,7 +101,10 @@ class Solution {
 }
 ```
 
--*Permutation*
+#### *Permutation*
+Similar to combination problems, but we need keep each element's visited status so we don't repeat the same exact number in the permutation. Also note we don't have to keep the current the index since permutation is all about the order of elements, not their appearance.\
+Time Complexity: O(n!) This is the total number of permutation cases\
+Space Complexity: O(n!)
 ```java
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
@@ -146,7 +148,3 @@ class Solution {
     }
 }
 ```
-## Notes
-Note all the constraints of the problem: If there are duplicates in the input.\
-Time Complexity: O(n!) This is number of permutation cases\
-Space Complexity: O(n!)
