@@ -148,3 +148,92 @@ class Solution {
     }
 }
 ```
+
+#### *Partition*
+At each backtracking layer, we decide what how many elements from the input go into the current layer's partition.\
+Time Complexity: O(2 ^ p) p the total number of partition\
+Space Complexity: O(2 ^ p)
+```java
+class Solution {
+    
+    Map<Integer, List<List<String>>> map;
+    public List<List<String>> partitionDP(String input) {
+        //use hash map to store partition result of substring starting from index i
+        map = new HashMap<>();
+        //backtracking
+        return DFS(input, 0);
+    }
+    private List<List<String>> DFS(String s, int start){
+        //if the current substring result has already been computed
+        if(map.containsKey(start)){
+            return map.get(start);
+        }
+        //the division result of substring starting from index "start"
+        List<List<String>> res = new ArrayList<>();
+        //if the start is out of bound, the list would only contian an empty string(it needs to contain an empty string)
+        if(start == input.length()){
+            res.add(new ArrayList<>());
+        }
+        //backtracking
+        for(int end = start + 1; end <= input.length(); ++end){
+            String curr = input.substring(start, end);
+            //if the substring [start, end) is valid
+            if(isValid(curr)){
+                //get division result from the right substring
+                List<List<String>> list = DFS(s, end);
+                //for each result from the right substring, we can form a new result for the current layer
+                for(var l : list){
+                    List<String> copy = new ArrayList<>(l);
+                    copy.add(0, curr);
+                    ans.add(copy);
+                }
+            }
+        }
+        //store current division result
+        map.put(start, res);
+        return res;
+    }
+}
+```
+```java
+class Solution {
+    
+    Map<Integer, List<List<String>>> map;
+    public List<List<String>> partitionDP(String input) {
+        //use hash map to store partition result of substring starting from index i
+        map = new HashMap<>();
+        //backtracking
+        return DFS(input, 0);
+    }
+    private List<List<String>> DFS(String s, int start){
+        //if the current substring result has already been computed
+        if(map.containsKey(start)){
+            return map.get(start);
+        }
+        //the division result of substring starting from index "start"
+        List<List<String>> res = new ArrayList<>();
+        //if the start is out of bound, the list would only contian an empty string(it needs to contain an empty string)
+        if(start == input.length()){
+            res.add(new ArrayList<>());
+        }
+        //backtracking
+        for(int end = start + 1; end <= input.length(); ++end){
+            String curr = input.substring(start, end);
+            //if the substring [start, end) is valid
+            if(isValid(curr)){
+                //get division result from the right substring
+                List<List<String>> list = DFS(s, end);
+                //for each result from the right substring, we can form a new result for the current layer
+                for(var l : list){
+                    List<String> copy = new ArrayList<>(l);
+                    copy.add(0, curr);
+                    ans.add(copy);
+                }
+            }
+        }
+        //store current division result
+        map.put(start, res);
+        return res;
+    }
+}
+```
