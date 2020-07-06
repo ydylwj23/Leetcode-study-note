@@ -8,7 +8,7 @@ The problem it can solve includes:
   -  **Permutation**
   -  **Partition**
   -  **board game placement**
-  -  **find island**
+  -  **island problem**
 - Tree traverse problem.
   - **Preorder**
   - **Inorder**
@@ -56,7 +56,6 @@ class Solution {
     }
 }
 ```
-
 
 #### *Combination*
 
@@ -155,7 +154,6 @@ Time Complexity: O(2 ^ p) p the total number of partition\
 Space Complexity: O(2 ^ p)
 ```java
 class Solution {
-    
     Map<Integer, List<List<String>>> map;
     public List<List<String>> partitionDP(String input) {
         //use hash map to store partition result of substring starting from index i
@@ -197,43 +195,89 @@ class Solution {
 ```
 ```java
 class Solution {
-    
-    Map<Integer, List<List<String>>> map;
-    public List<List<String>> partitionDP(String input) {
-        //use hash map to store partition result of substring starting from index i
-        map = new HashMap<>();
-        //backtracking
-        return DFS(input, 0);
+    public List<String> addOperators(String num, int target) {
+        List<String> ans = new ArrayList<>();
+        DFS(index, ...);
+        return ans;
     }
-    private List<List<String>> DFS(String s, int start){
-        //if the current substring result has already been computed
-        if(map.containsKey(start)){
-            return map.get(start);
-        }
-        //the division result of substring starting from index "start"
-        List<List<String>> res = new ArrayList<>();
-        //if the start is out of bound, the list would only contian an empty string(it needs to contain an empty string)
-        if(start == input.length()){
-            res.add(new ArrayList<>());
+    private void DFS(int index, ...){
+        //if the we have reach the end and under certain condition, we can collect the current parition
+        if(reachEnd && condition){
+            ans.add(curPartition);
+            return;
         }
         //backtracking
-        for(int end = start + 1; end <= input.length(); ++end){
-            String curr = input.substring(start, end);
-            //if the substring [start, end) is valid
-            if(isValid(curr)){
-                //get division result from the right substring
-                List<List<String>> list = DFS(s, end);
-                //for each result from the right substring, we can form a new result for the current layer
-                for(var l : list){
-                    List<String> copy = new ArrayList<>(l);
-                    copy.add(0, curr);
-                    ans.add(copy);
-                }
+        for(int i = index; i < length; i++){
+            //extract the current segment substring
+            String curString = input.substring(index, i + 1);
+            //if the current substring satisfys certain condition, move on to the next call
+            if (condition){
+                DFS(i + 1, ...);
             }
         }
-        //store current division result
-        map.put(start, res);
-        return res;
+    }
+}
+```
+
+#### *board game placement*
+At each backtracking layer, we decide where to put a piece on a board, this usually makes some other placement impossible.\
+Time Complexity: O(n!) n ways to put the first piece, n - 1 ways for the second piece...\
+Space Complexity: O(n) for visited status
+```java
+class Solution {
+    //marks for placement that cannot be picked
+    boolean[] marks;
+    public List<List<String>> solveNQueens(int n) {
+        //answer list
+        List<List<String>> ans = new ArrayList<>();
+        
+        //dfs for all answers
+        DFS(index, ...);
+        
+        return ans;
+    }
+    //do DFS row by row
+    private void DFS(int index, ...){
+        //if the we have reach the end and under certain condition, we can collect the current parition
+        if(reachEnd && condition){
+            ans.add(curPlacement);
+            return;
+        }
+        //backtracking
+        for(int i = 0; i < n; i++){
+            ////current layer's placement
+            if(!colStatus[i] && !diaStatus1[dia1] && !diaStatus2[dia2]){
+                marks[x] = true;
+                list.add(new String(row));
+                //next layer
+                DFS(i + 1, ...);
+                list.remove(list.size() - 1);
+                marks[x] = false;
+            }
+        }
+    }
+}
+```
+#### *island problem*
+dfs can traverse an area of cells with certain condition\
+Time Complexity: O(m * n) the grid size\
+Space Complexity: O(1) if we can modify the grid
+```java
+class Solution {
+    int[] rowDir = new int[] {0, 1, 0, -1};
+    int[] colDir = new int[] {1, 0, -1, 0};
+    void dfs(char[][] grid, int row, int col) {
+        //dfs on four neighbor cells
+        for (int i = 0; i < 4; ++i) {
+            int nextRow = row + rowDir[i];
+            int nextCol = col + colDir[i];
+            //only dfs valid cells that is under certain condition
+            if (nextRow >= 0 && nextRow < m && nextCol >= 0 && nextCol < n && grid[nextRow][nextCol] == condition) {
+                //mark as not conditioned for the search
+                grid[row][col] = !condition;
+                dfs(grid, nextRow, nextCol);
+            }
+        }
     }
 }
 ```

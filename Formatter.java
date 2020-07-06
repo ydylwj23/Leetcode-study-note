@@ -1,26 +1,16 @@
 class Solution {
+    void dfs(char[][] grid, int r, int c) {
+        int nr = grid.length;
+        int nc = grid[0].length;
 
-    public boolean isPathCrossing(String path) {
-        Set<Integer> set = new HashSet<>();
-        set.add(0);
-        int x = 0;
-        int y = 0;
-        for (char c : path.toCharArray()) {
-            if (c == 'N') {
-                y += 1;
-            } else if (c == 'E') {
-                x += 1;
-            } else if (c == 'S') {
-                y -= 1;
-            } else {
-                x -= 1;
-            }
-            int next = 10001 * x + y;
-            if (set.contains(next)) {
-                return true;
-            }
-            set.add(next);
+        if (r < 0 || c < 0 || r >= nr || c >= nc || grid[r][c] == '0') {
+            return;
         }
-        return false;
+
+        grid[r][c] = '0';
+        dfs(grid, r - 1, c);
+        dfs(grid, r + 1, c);
+        dfs(grid, r, c - 1);
+        dfs(grid, r, c + 1);
     }
 }
