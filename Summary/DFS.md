@@ -247,8 +247,8 @@ class Solution {
         }
         //backtracking
         for(int i = 0; i < n; i++){
-            ////current layer's placement
-            if(!colStatus[i] && !diaStatus1[dia1] && !diaStatus2[dia2]){
+            //check if the new placement is valid
+            if(newPlacement == valid){
                 marks[x] = true;
                 list.add(new String(row));
                 //next layer
@@ -357,15 +357,14 @@ class Solution {
     private boolean dfs(curNode, color){
         //check if the current node has been painted and if the color matches the intended color
         if (color[curNode] != noColor) {
-            return color[curNode] == color1;
+            return color[curNode] == color;
         }
         //paint the current node
         color[curNode] = color1;
-        visited[curNode] = status;
         //recursively call DFS on all children
         for(every child of curNode){
             //try paint children with the opposite color
-            if (!dfs(node, opposite(color))) {
+            if (!dfs(node, oppositeOrNext(color))) {
                     return false;
                 }
         }
@@ -383,7 +382,7 @@ class Solution {
         //try to perform dfs starting from every node in the graph
         for(every node){
             //only start DFS on nodes with certain condition
-            if(visitStatus[node] != visitStatus) {
+            if(visitStatus[node] != visited) {
                 if (!dfs(node)) {
                     return false;
                 }
@@ -401,7 +400,7 @@ class Solution {
         //recursively call DFS on all children
         for(every child of curNode){
             //only perform dfs on unvisited children
-            if(visitStatus[child] != visitStatus) {
+            if(visitStatus[child] != visited) {
                 if (dfs(child)) {
                     return true;
                 }
@@ -425,13 +424,13 @@ class Solution {
         //try to perform dfs starting from every node in the graph
         for(every node){
             //only start DFS on nodes with certain condition
-            if(visitStatus[node] != visitStatus) {
+            if(visitStatus[node] != visited) {
                 if (dfs(node)) {
                     return hasCycle;
                 }
             }
         }
-        return reverse(stack);
+        return reverse(stack.pop());
     }
     private boolean dfs(curNode){
         //if we encouter a node that is being visited, we found a cycle
@@ -443,7 +442,7 @@ class Solution {
         //recursively call DFS on all children
         for(every child of curNode){
             //only perform dfs on unvisited children
-            if(visitStatus[child] != visitStatus) {
+            if(visitStatus[child] != visited) {
                 if (dfs(child)) {
                     return true;
                 }
@@ -465,12 +464,18 @@ class Solution {
     int[] id;
     int[] low;
     int idCount = 0;
+    **int outEdgeCount;
+    //if a node is articulation point
+    **isArt = new boolean[n];
     public List<edge> Tarjan(Map<Integer, List<Integer>> graph) {
         //try to perform dfs starting from every node in the graph
         dfs(0, -1);
-        return ans;
+        **//if the the starting node has more than one out going node, it's an articulation point
+        **isArt[0] = outEdgeCount > 1;
     }
     private void dfs(curNode, parent){
+        **//update origin point's out going edge count
+        **if(parent == 0) outEdgeCount++;
         //update current node's id, low-link value and visited state
         id[cur] = idCount++;
         visited[cur] = true;
@@ -485,10 +490,15 @@ class Solution {
                 DFS(graph, to, cur);
                 //update low-link value
                 low[cur] = Math.min(low[cur], low[to]);
-                //if current node's id is smaller than child's low-link value, it means there's no backward edge to the current node's component if the bridge is to be cut
+                //if current node's id is smaller than child's low-link value, it means there's no backward edge to the current node's component if the bridge is to be cut. And the current node is an articulation point
                 if(id[cur] < low[to]){
-                    ans.add(currentEdge);
+                    bridge.add(currentEdge);
+                    **isArt[cur] = true;
                 }
+                **//articulation point found via cycle
+                **if(id[cur] == low[to]){
+                    **isArt[cur] = true;
+                **}
             }
             //if the child is visited, it's a backward edge
             else{
