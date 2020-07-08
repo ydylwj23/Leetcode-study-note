@@ -14,6 +14,8 @@ The problem it can solve includes:
   - **Inorder**
   - **Postorder**
 - Graph traverse problem.
+  - **Graph coloring**
+  - **Cycle detection**
 
 A very common structure of DFS algorithm consists of 1: visited status holder(optional) 2: base case 3: backtracking case
 
@@ -267,15 +269,231 @@ class Solution {
     int[] rowDir = new int[] {0, 1, 0, -1};
     int[] colDir = new int[] {1, 0, -1, 0};
     void dfs(char[][] grid, int row, int col) {
+        //mark as not conditioned for the search
+        grid[row][col] = !condition;
         //dfs on four neighbor cells
         for (int i = 0; i < 4; ++i) {
             int nextRow = row + rowDir[i];
             int nextCol = col + colDir[i];
             //only dfs valid cells that is under certain condition
             if (nextRow >= 0 && nextRow < m && nextCol >= 0 && nextCol < n && grid[nextRow][nextCol] == condition) {
-                //mark as not conditioned for the search
-                grid[row][col] = !condition;
                 dfs(grid, nextRow, nextCol);
+            }
+        }
+    }
+}
+```
+### Tree traverse problem
+DFS can be applied to traverse tree structures. This includes preorder, inorder and postorder. For more details, check Tree summary.\
+Time Complexity: O(n) each node gets visited once\
+Space Complexity: O(h) tree height in stack
+```java
+class Solution {
+    public void treeTraversal(TreeNode root) {
+        DFS(root);
+    }
+    private void DFS(TreeNode root){
+        //base case
+        if(root == null) return;
+        //recursive case
+        **handle(root.val); //preorder
+        DFS(root.left);
+        **handle(root.val); //inorder
+        DFS(root.right);
+        **handle(root.val); //postorder
+    }
+}
+```
+
+### Graph traverse problem
+DFS is a very common algorithm to be used in graph. Actually, most problems that DFS can solve can be viewed as graph problem, including tree problem. After all, it depth first searches a data structure and visite all nodes where they are connected with each other through some edges. DFS can be used to compute size of the component, check or alter status of a component, check if some nodes are in the same component in an unweighted undirected(occationally directed with pruning, not recommended) graph
+
+Time Complexity: O(n) each node gets visited once\
+Space Complexity: O(n) for visited status
+```java
+class Solution {
+    public boolean DFS(Map<Integer, List<Integer>> graph) {
+        //store different visit status of each node
+        int[] visited = new int[N];
+        //try to perform dfs starting from every node in the graph
+        for(every node){
+            //only start DFS on nodes with certain condition
+            if(visited[node] == unvisited) {
+                dfs(node);
+            }
+        }
+    }
+    private void dfs(curNode){
+        //mark current node's status
+        visited[curNode] = status;
+        //recursively call DFS on all children
+        for(every child of curNode){
+            //perform dfs on children
+            if(visited[child] == unvisited) {
+                dfs(child);
+            }
+        }
+    }
+}
+```
+#### *Graph coloring*
+DFS can perform graph coloring/bipartite in directed or undirected unweighted graph.
+```java
+class Solution {
+    public boolean bipartite(Map<Integer, List<Integer>> graph) {
+        //store different visit status of each node
+        int[] color = new int[N];
+        //try to perform dfs starting from every node in the graph
+        for(every node){
+            //only start DFS on nodes with certain condition
+            if(color[node] == noColor) {
+                if (!dfs(node, color1)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    private boolean dfs(curNode, color){
+        //check if the current node has been painted and if the color matches the intended color
+        if (color[curNode] != noColor) {
+            return color[curNode] == color1;
+        }
+        //paint the current node
+        color[curNode] = color1;
+        visited[curNode] = status;
+        //recursively call DFS on all children
+        for(every child of curNode){
+            //try paint children with the opposite color
+            if (!dfs(node, opposite(color))) {
+                    return false;
+                }
+        }
+        return true;
+    }
+}
+```
+#### *Cycle detection*
+DFS can detect cycles in directed unweighted graph when paired with "unvisited, visiting, visted" status.
+```java
+class Solution {
+    public boolean Cycle(Map<Integer, List<Integer>> graph) {
+        //store different visit status of each node
+        int[] visitStatus = new int[N];
+        //try to perform dfs starting from every node in the graph
+        for(every node){
+            //only start DFS on nodes with certain condition
+            if(visitStatus[node] != visitStatus) {
+                if (!dfs(node)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    private boolean dfs(curNode){
+        //if we encouter a node that is being visited, we found a cycle
+        if (visitStatus[curr] == visiting) {
+            return true;
+        }
+        //mark current node's status as visiting
+        visitStatus[curNode] = visiting;
+        //recursively call DFS on all children
+        for(every child of curNode){
+            //only perform dfs on unvisited children
+            if(visitStatus[child] != visitStatus) {
+                if (dfs(child)) {
+                    return true;
+                }
+            }
+        }
+        //mark current node as visited
+        visitStatus[curr] = visited;
+        return false;
+    }
+}
+```
+#### *Topological sort*
+DFS perform topological sort when used with stack
+```java
+class Solution {
+    //use stack to record reverse order of nodes
+    Stack<Integer> stack = new Stack<>();
+    public boolean topologicalSort(Map<Integer, List<Integer>> graph) {
+        //store different visit status of each node
+        int[] visitStatus = new int[N];
+        //try to perform dfs starting from every node in the graph
+        for(every node){
+            //only start DFS on nodes with certain condition
+            if(visitStatus[node] != visitStatus) {
+                if (dfs(node)) {
+                    return hasCycle;
+                }
+            }
+        }
+        return reverse(stack);
+    }
+    private boolean dfs(curNode){
+        //if we encouter a node that is being visited, we found a cycle
+        if (visitStatus[curr] == visiting) {
+            return true;
+        }
+        //mark current node's status as visiting
+        visitStatus[curNode] = visiting;
+        //recursively call DFS on all children
+        for(every child of curNode){
+            //only perform dfs on unvisited children
+            if(visitStatus[child] != visitStatus) {
+                if (dfs(child)) {
+                    return true;
+                }
+            }
+        }
+        //mark current node as visited
+        visitStatus[curr] = visited;
+        //push the current node into the stack in post order
+        stack.push(curNode);
+        return false;
+    }
+}
+```
+#### *Tarjan*
+Tarjan treats an undirected graph as a directed one and can find bridges or articulation points in it.
+```java
+class Solution {
+    boolean[] visited;
+    int[] id;
+    int[] low;
+    int idCount = 0;
+    public List<edge> Tarjan(Map<Integer, List<Integer>> graph) {
+        //try to perform dfs starting from every node in the graph
+        dfs(0, -1);
+        return ans;
+    }
+    private void dfs(curNode, parent){
+        //update current node's id, low-link value and visited state
+        id[cur] = idCount++;
+        visited[cur] = true;
+        low[cur] = id[cur];
+        //recursively call DFS on all possible children
+        for(every child of curNode){
+            //cannot go back to parent
+            if(child == parent) continue;
+            //if the child is not visited, it's a forward edge
+            if(!visited[to]){
+                //recursion
+                DFS(graph, to, cur);
+                //update low-link value
+                low[cur] = Math.min(low[cur], low[to]);
+                //if current node's id is smaller than child's low-link value, it means there's no backward edge to the current node's component if the bridge is to be cut
+                if(id[cur] < low[to]){
+                    ans.add(currentEdge);
+                }
+            }
+            //if the child is visited, it's a backward edge
+            else{
+                //update low-link value
+                low[cur] = Math.min(low[cur], id[to]);
             }
         }
     }
