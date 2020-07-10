@@ -1,7 +1,8 @@
 # DFS
 
 ## **Description**
-DFS stands for Depth First Search, which is also called backtracking. It is a very commonly used search algorithm.\
+DFS stands for Depth First Search, which is also called backtracking. It is a very commonly used search algorithm.
+
 The problem it can solve includes:
 - General backtracking problem. 
   -  **Combination**
@@ -16,6 +17,8 @@ The problem it can solve includes:
 - Graph traverse problem.
   - **Graph coloring**
   - **Cycle detection**
+  - **Topological sort**
+  - **Tarjan**
 
 A very common structure of DFS algorithm consists of 1: visited status holder(optional) 2: base case 3: backtracking case
 
