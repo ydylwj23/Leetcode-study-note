@@ -15,7 +15,7 @@ Union Find(DSU): 1. Can group(separate with other) components in undirected grap
 
 Topology sort: 1. Cycle detection in directed graph. 2. Can generate directed path through a directed graph. 3. Use In/Out degree to do certain judgements.
 
-Dikastra: 1. Greedy algorithm to find the shortest path from 1 node to all other nodes in a directed(occationally undirected) weighted graph. 2. Can be paired with extra step info in each node to detect shortest path within certain steps.
+Dijkstra: 1. Greedy algorithm to find the shortest path from 1 node to all other nodes in a directed(occationally undirected) weighted graph. 2. Can be paired with extra step info in each node to detect shortest path within certain steps.
 
 Bellman Ford: 1. DP algorithm to find the shortest path from 1 node to all other nodes in a directed(occationally undirected) weighted graph. 2. Can be used with out DP by always using source node distance from the last result to detect shortest path within certain steps.
 

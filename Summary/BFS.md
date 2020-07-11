@@ -10,8 +10,8 @@ The problem it can solve includes:
 - Tree traverse problem.
   - **Level order traversal**
 - Graph traverse problem.
-  - **Graph coloring**
-  - **Cycle detection**
+  - **Topological sort**
+  - **Dijkstra**
 
 A very common structure of BFS algorithm consists of 1: visited status holder 2: queue to hold the current layer result and a step counter 3: While loop which stops if queue is empty or target is found
 
@@ -194,7 +194,6 @@ class Solution {
     }
 }
 ```
-
 ### Graph traverse problem
 BFS: 1. Can compute steps to complete certain task(For example, shortest path, K steps) in a unweighted undirected(occationally directed with Pruning, not recommended) graph. 2. With some advanced problems, we need to pair it with bit encoding, hashmap. 3. Can be used to find the shortest path in weightest path in Dijkstra algorithm.
 Time Complexity: O(n) each node gets visited once\
@@ -234,86 +233,81 @@ class Solution {
     }
 }
 ```
-#### *Graph coloring*
-DFS can perform graph coloring/bipartite in directed or undirected unweighted graph.
+#### *Topological sort*
+Topological sort is BFS with in-degree. It sorts a directed graph in order and can be used to find loop.
 ```java
 class Solution {
-    public boolean bipartite(Map<Integer, List<Integer>> graph) {
-        //store different visit status of each node
-        int[] color = new int[N];
-        //try to perform dfs starting from every node in the graph
-        for(every node){
-            //only start DFS on nodes with certain condition
-            if(color[node] == noColor) {
-                if (!dfs(node, color1)) {
-                    return false;
+    public int[] topologySort(int[][] edges) {
+        // build the graph, store in-degree
+        Map<Integer, List<Integer>> graph = new HashMap<Integer, List<Integer>>();
+        int[] indegree = new int[numCourses];
+        for (var edge : edges) {
+            int from = edge[0];
+            int to = edge[1];
+            adjList.computeIfAbsent(from, x -> new ArrayList<Integer>()).add(to);
+            // Record in-degree of each vertex
+            indegree[to]++;
+        }
+        // Add all nodes with 0 in-degree to the queue to start the topology sort
+        Queue<Integer> q = new LinkedList<Integer>();
+        for (int i = 0; i < N; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+        // record the sorted order if needed
+        int[] topologicalOrder = new int[N];
+        int index = 0;
+        // Process until the q becomes empty
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+            // update the order
+            topologicalOrder[index++] = cur;
+            // Reduce the in-degree of each next node by 1
+            for (all neighbors) {
+                //reduce indegree of neighbors
+                indegree[neighbor]--;
+                // If in-degree of a neighbor becomes 0, add it to the q
+                if (indegree[neighbor] == 0) {
+                    q.add(neighbor);
                 }
             }
         }
-        return true;
-    }
-    private boolean dfs(curNode, color){
-        //check if the current node has been painted and if the color matches the intended color
-        if (color[curNode] != noColor) {
-            return color[curNode] == color;
+        // Number of nodes will be less than N if there's a cycle in the directed graph
+        if (index == N) {
+            return topologicalOrder;
         }
-        //paint the current node
-        color[curNode] = color1;
-        //recursively call DFS on all children
-        for(every child of curNode){
-            //try paint children with the opposite color
-            if (!dfs(node, oppositeOrNext(color))) {
-                    return false;
-                }
-        }
-        return true;
     }
 }
 ```
-
-
-
-
-
-
-
-
-# BFS with rolling DP:
+#### *Dijkstra*
+Dijkstra is a greedy algorithm to find the shortest path from 1 node to all other nodes in a directed(occationally undirected) weighted graph. 2. Can be paired with extra step info in each node to detect shortest path within certain steps.
 ```java
-class Solution {
-    Map<Character, List<Character>> map = new HashMap<>();
-    List<String> ans = new ArrayList<>();
-    public List<String> letterCombinations(String digits) {
-        //corner case
-        if(digits.length() == 0) return ans;
-        //build the number-digit relation map
-        map.put('2', new ArrayList<>(Arrays.asList('a', 'b', 'c')));
-        map.put('3', new ArrayList<>(Arrays.asList('d', 'e', 'f')));
-        map.put('4', new ArrayList<>(Arrays.asList('g', 'h', 'i')));
-        map.put('5', new ArrayList<>(Arrays.asList('j', 'k', 'l')));
-        map.put('6', new ArrayList<>(Arrays.asList('m', 'n', 'o')));
-        map.put('7', new ArrayList<>(Arrays.asList('p', 'q', 'r', 's')));
-        map.put('8', new ArrayList<>(Arrays.asList('t', 'u', 'v')));
-        map.put('9', new ArrayList<>(Arrays.asList('w', 'x', 'y', 'z')));
-        //BFS
-        ans.add("");
-        for(int i = 0; i < digits.length(); i++){
-            //a temparay list to hold all new results
-            List<String> tmp = new ArrayList<>();
-            //for every string built previously
-            for(var s : ans){
-                //add all possible new letter
-                for(var c : map.get(digits.charAt(i))){
-                    tmp.add(s + c);
+class Solution
+    public int Dijkstra(graph, source) {
+        //use priority queue to keep nodes during the search
+        PriorityQueue<int[]> heap = new PriorityQueue<>((x, y) -> x[1] - y[1]);
+        //start the algorithm from the source and distance of 0
+        heap.add(new int[]{Source, 0});
+        //use a hashmap to store distance to reach each node
+        Map<Integer, Integer> distance = new HashMap<>();
+        //use Dijkstra's Algorithm to travel from Source to all other nodes
+        while(!heap.isEmpty()){
+            curNode = heap.poll();
+            //if the node time is already in the hash table, the recorded time must be shorter than the current time
+            if(distance.containsKey(curNode)) continue;
+            //update a shorter path distance for the current node
+            distance.put(curNode, dis);
+            //put new node in the queue
+            for(all neighbors){
+                //if node has already been extract from the heap before, which means the distance to it is already the smallest, we don't need add any other edge that leads to it
+                if(!time.containsKey(neightbor)){
+                    heap.add({neighbor, dis + disOf(curNode, neighbor)});
                 }
             }
-            //rotate lists, tmp is now the new answer list
-            ans = tmp;
         }
-        return ans;
+        //some nodes cannot be reached
+        if(distance.size() < N) return -1;
     }
 }
 ```
-
-## Notes
-In this example, we are building combination using BFS by rolling two containers. One container stores results from the last search, and the other container stores result of this search as we compute results using the last container.

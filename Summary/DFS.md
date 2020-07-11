@@ -512,3 +512,32 @@ class Solution {
     }
 }
 ```
+#### *Eulerian Path*
+The algorithm to build the Eulerian path is a greedy post-order tree traversal algorithm where each node only has two nodes. It is based on the fact that there's always a possible Eulerian path.
+```java
+class Solution {
+    public List<String> EulerianPath(edges, source) {
+        //build the graph using hashmap and priority queue
+        Map<T, PriorityQueue<T>> graph = new HashMap<>();
+        for(all edges){
+            graph.computeIfAbsent(from, x -> new PriorityQueue<>()).add(to);
+            graph.computeIfAbsent(to, x -> new PriorityQueue<>());
+        }
+        //use recursion to travser the graph in post order like a tree
+        postOrder(source);
+        //reversed the traverse result is the right order of Eulerian Path
+        Collections.reverse(list);
+        return list;
+    }
+    public void postOrder(curNode){
+        PriorityQueue<T> children = graph.get(curNode);
+        //the priority queue helps to use greedy order to recursively visit children
+        while(!children.isEmpty()){
+            //every visited child is polled from the heap
+            postOrder(children.poll());
+        }
+        //post order to add traverse result
+        list.add(cur);
+    }
+}
+```
