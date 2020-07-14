@@ -2,7 +2,7 @@
 
 ## **Description**
 ---
-A collection of common java data structure and AIPs
+A collection of common java data structure and APIs
 
 ![image](https://static.javatpoint.com/images/java-collection-hierarchy.png)
 
@@ -29,7 +29,7 @@ The problem it can solve includes:
 
 
 
-## **Coding example**
+## **Utility Class**
 ---
 ## *Collections*
 
@@ -97,3 +97,70 @@ Sorts the specified range of the array into ascending order. The range to be sor
 - `String toString(primitive[] a)`
 Returns a string representation of the contents of the specified array. The string representation consists of a list of the array's elements, enclosed in square brackets ("[]"). Adjacent elements are separated by the characters ", " (a comma followed by a space). Elements are converted to strings as by String.valueOf(int). Returns "null" if a is null.  
 ***Return*** a string representation of a
+
+## *Integer*
+
+The Integer class wraps a value of the primitive type int in an object. An object of type Integer contains a single field whose type is int.
+
+- `int bitCount(int i)`
+Returns the number of one-bits in the two's complement binary representation of the specified int value. This function is sometimes referred to as the population count.   
+***Return*** the number of one-bits in the two's complement binary representation of the specified int value.
+
+- `int compare(int x, int y)`
+Compares two int values numerically. The value returned is identical to what would be returned by: Integer.valueOf(x).compareTo(Integer.valueOf(y))   
+***Return*** the value 0 if x == y; a value less than 0 if x < y; and a value greater than 0 if x > y
+
+- `int compareTo(Integer anotherInteger)`
+Compares two Integer objects numerically.   
+***Return*** the value 0 if this Integer is equal to the argument Integer; a value less than 0 if this Integer is numerically less than the argument Integer; and a value greater than 0 if this Integer is numerically greater than the argument Integer (signed comparison).
+
+- `String toString(int i)`
+Returns a String object representing the specified integer. The argument is converted to signed decimal representation and returned as a string, exactly as if the argument and radix 10 were given as arguments to the toString(int, int) method.   
+***Return*** a string representation of the argument in base 10.
+
+- `int parseInt(String s)`
+Parses the string argument as a signed decimal integer. The characters in the string must all be decimal digits, except that the first character may be an ASCII minus sign '-' ('\u002D') to indicate a negative value or an ASCII plus sign '+' ('\u002B') to indicate a positive value. The resulting integer value is returned, exactly as if the argument and the radix 10 were given as arguments to the parseInt(java.lang.String, int) method.   
+***Return*** the integer value represented by the argument in decimal.
+
+- `Integer valueOf(int i)`
+Returns an Integer instance representing the specified int value. If a new Integer instance is not required, this method should generally be used in preference to the constructor Integer(int), as this method is likely to yield significantly better space and time performance by caching frequently requested values. This method will always cache values in the range -128 to 127, inclusive, and may cache other values outside of this range.  
+***Return*** an Integer instance representing i.
+
+- `int MAX_VALUE`
+A constant holding the maximum value an int can have, 2^31-1.   
+
+- `int MIX_VALUE`
+A constant holding the maximum value an int can have, -2^31.   
+
+## *String*
+
+The String class represents character strings. All string literals in Java programs, such as "abc", are implemented as instances of this class.
+
+- `char charAt(int index)`
+Returns the char value at the specified index. An index ranges from 0 to length() - 1. The first char value of the sequence is at index 0, the next at index 1, and so on, as for array indexing. If the char value specified by the index is a surrogate, the surrogate value is returned.  
+***Return*** the char value at the specified index of this string. The first char value is at index 0.
+
+- `int compareTo(String anotherString)`
+Compares two strings lexicographically. The comparison is based on the Unicode value of each character in the strings. The character sequence represented by this String object is compared lexicographically to the character sequence represented by the argument string. The result is a negative integer if this String object lexicographically precedes the argument string. The result is a positive integer if this String object lexicographically follows the argument string. The result is zero if the strings are equal; compareTo returns 0 exactly when the equals(Object) method would return true.  
+***Return*** the value 0 if the argument string is equal to this string; a value less than 0 if this string is lexicographically less than the string argument; and a value greater than 0 if this string is lexicographically greater than the string argument.
+
+- `boolean equals(Object anObject)`
+Compares this string to the specified object. The result is true if and only if the argument is not null and is a String object that represents the same sequence of characters as this object.  
+***Return*** true if the given object represents a String equivalent to this string, false otherwise
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
