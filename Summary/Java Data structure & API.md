@@ -109,8 +109,8 @@ Returns a String object representing the specified integer.
 - `Static int parseInt(String s)`
 Parses the string argument as a signed decimal integer.
 
-- `Static Integer valueOf(int i)`
-Returns an Integer instance representing the specified int value.
+- `Static Integer valueOf(int i)`Returns an Integer instance representing the specified int value.
+  - `Static Integer valueOf(String s)`
 
 - `int MAX_VALUE`
 A constant holding the maximum value an int can have, 2^31-1.   
