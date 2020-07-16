@@ -234,5 +234,420 @@ Inserts the string representation of the {primitive} into this sequence.
 Returns a string representing the data in this sequence.
 
 
+## **Container**
+---
+## *List (Interface)*
+
+An ordered collection (also known as a *sequence*). The user of this interface has precise control over where in the list each element is inserted. The user can access elements by their integer index (position in the list), and search for elements in the list.
+
+- `boolean add(E e)`
+Appends the specified element(or a collection of elements returned by the specified colection's iterator) to the end of this list (or at specified index).
+  - `void add(int index, E element)`
+  - `boolean addAll(Collection<? extends E> c)`
+  - `boolean addAll(int index, Collection<? extends E> c)`
+
+- `E remove(int index)`
+Removes the element at the specified position in this list (optional operation).
+  - `boolean remove(Object o)`
+  - `boolean removeAll(Collection<?> c)`
+
+- `void clear()`
+Removes all of the elements from this list (optional operation). 
+
+- `boolean contains(Object o)`
+Returns true if this list contains the specified element.
+
+- `E get(int index)`
+Returns the element at the specified position in this list.
+
+- `int indexOf(Object o)`
+Returns the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element.
+  - `int lastIndexOf(Object o)`
+
+- `boolean isEmpty()`
+Returns true if this list contains no elements.
+
+- `E set(int index, E element)`
+Replaces the element at the specified position in this list with the specified element (optional operation).
+
+- `int size()`
+Replaces the element at the specified position in this list with the specified element (optional operation).
+
+- `<T> T[] toArray(T[] a)`
+Returns an array containing all of the elements in this list in proper sequence (from first to last element); the runtime type of the returned array is that of the specified array. Like the toArray() method, this method acts as bridge between array-based and collection-based APIs. Further, this method allows precise control over the runtime type of the output array, and may, under certain circumstances, be used to save allocation costs. Suppose x is a list known to contain only strings. The following code can be used to dump the list into a newly allocated array of String: String[] y = x.toArray(new String[0]);
+
+## *ArrayList (implement List)*
+
+Resizable-array implementation of the List interface. Implements all optional list operations, and permits all elements, including null. In addition to implementing the List interface, this class provides methods to manipulate the size of the array that is used internally to store the list. (This class is roughly equivalent to Vector, except that it is unsynchronized.)
+
+- `Constructor`
+Can take `Collection<? extends E>` as parameters
+
+- `boolean add(E e)`
+  - `void add(int index, E element)`
+  - `boolean addAll(Collection<? extends E> c)`
+  - `boolean addAll(int index, Collection<? extends E> c)`
+
+- `E remove(int index)`
+  - `boolean remove(Object o)`
+  - `boolean removeAll(Collection<?> c)`
+
+- `void clear()`
+
+- `boolean contains(Object o)`
+
+- `E get(int index)`
+
+- `int indexOf(Object o)`
+  - `int lastIndexOf(Object o)`
+
+- `boolean isEmpty()`
+
+- `E set(int index, E element)`
+
+- `int size()`
+
+- `<T> T[] toArray(T[] a)`
+
+- `void forEach(Consumer<? super E> action)`
+Performs the given action for each element of the Iterable until all elements have been processed or the action throws an exception. For example: Numbers.forEach((n) -> System.out.println(n));
+
+## *LinkedList (implement List & Deque)*
+
+Doubly-linked list implementation of the List and Deque interfaces. Implements all optional list operations, and permits all elements (including null). All of the operations perform as could be expected for a doubly-linked list. Operations that index into the list will traverse the list from the beginning or the end, whichever is closer to the specified index.
+
+- `Constructor`
+Can take `Collection<? extends E>` as parameters
+
+- `boolean add(E e)`
+  - `void add(int index, E element)`
+  - `boolean addAll(Collection<? extends E> c)`
+  - `boolean addAll(int index, Collection<? extends E> c)`
+
+- `E get(int index)`
+
+- `E remove(int index)`
+  - `boolean remove(Object o)`
+  - `boolean removeAll(Collection<?> c)`
+
+- `void addFirst(E e)`
+  - `void addLast(E element)`
+  - `boolean offerFirst(E element)`
+  - `boolean offerLast(E element)`
+
+- `E peekFirst()`null if empty
+  - `E peekLast()`
+  - `E getFirst()`throw if empty
+  - `E getLast()`
+
+- `void clear()`
+
+- `E pollFirst()`null if empty
+  - `E pollLast()`
+  - `E removeFirst()`throw if empty
+  - `E removeLast()`
+
+- `boolean contains(Object o)`
+
+- `int indexOf(Object o)`
+  - `int lastIndexOf(Object o)`
+
+- `boolean isEmpty()`
+
+- `E set(int index, E element)`
+
+- `int size()`
+
+- `<T> T[] toArray(T[] a)`
+
+## *Stack (extends Vector)*
+
+The Stack class represents a last-in-first-out (LIFO) stack of objects. It extends class Vector with five operations that allow a vector to be treated as a stack. The usual push and pop operations are provided, as well as a method to peek at the top item on the stack, a method to test for whether the stack is empty, and a method to search the stack for an item and discover how far it is from the top.
+
+- `Constructor`
+
+- `E peek()`
+
+- `E pop()`
+
+- `void push(E e)`
+
+- `boolean isEmpty()`
+
+## *Queue (Interface)*
+
+A collection designed for holding elements prior to processing. Besides basic Collection operations, queues provide additional insertion, extraction, and inspection operations. Each of these methods exists in two forms: one throws an exception if the operation fails, the other returns a special value (either null or false, depending on the operation). The latter form of the insert operation is designed specifically for use with capacity-restricted Queue implementations; in most implementations, insert operations cannot fail.
+
+- `boolean add(E e)`
+  - `boolean offer(E e)`
+
+- `E poll()`null if empty
+  - `E remove()`throw if empty
+
+- `E peek()`
+
+## *PriorityQueue (implement Queue)*
+
+An unbounded priority queue based on a priority heap. The elements of the priority queue are ordered according to their natural ordering, or by a Comparator provided at queue construction time, depending on which constructor is used. A priority queue does not permit null elements. A priority queue relying on natural ordering also does not permit insertion of non-comparable objects (doing so may result in ClassCastException).
+
+- `Constructor`
+Can take `Collection<? extends E>`, `Comparator<? super E>` as parameters
+
+- `boolean add(E e)`
+  - `boolean offer(E e)`
+
+- `E poll()`null if empty
+  - `E remove()`throw if empty
+
+- `E peek()`
+
+- `int size()`
+
+- `boolean contains(Object o)`
+
+- `void clear()`
+
+- `<T> T[] toArray(T[] a)`
+
+## *Deque (Interface)*
+
+A linear collection that supports element insertion and removal at both ends. The name deque is short for "double ended queue" and is usually pronounced "deck". Most Deque implementations place no fixed limits on the number of elements they may contain, but this interface supports capacity-restricted deques as well as those with no fixed size limit.
+
+- `void	addFirst(E e)`
+  - `void	addLast(E e)`
+  - `void	offerFirst(E e)`
+  - `void	offerLast(E e)`
+
+- `E peekFirst()`
+  - `E peekLast()`
+  - `E getFirst()`
+  - `E getLast()`
+
+- `E pollFirst()`null if empty
+  - `E pollLast()`
+  - `E removeFirst()`throw if empty
+  - `E removeLast()`
+
+- `int size()`
+
+- `boolean contains(Object o)`
+
+## *ArrayDeque (implement Deque)*
+
+Resizable-array implementation of the Deque interface. Array deques have no capacity restrictions; they grow as necessary to support usage. They are not thread-safe; in the absence of external synchronization, they do not support concurrent access by multiple threads. Null elements are prohibited. This class is likely to be faster than Stack when used as a stack, and faster than LinkedList when used as a queue.
+
+- `Constructor`
+Can take `Collection<? extends E>` as parameters
+
+- `void	addFirst(E e)`
+  - `void	addLast(E e)`
+  - `void	offerFirst(E e)`
+  - `void	offerLast(E e)`
+
+- `E peekFirst()`null if empty
+  - `E peekLast()`
+  - `E getFirst()`throw if empty
+  - `E getLast()`
+
+- `void clear()`
+
+- `E pollFirst()`null if empty
+  - `E pollLast()`
+  - `E removeFirst()`throw if empty
+  - `E removeLast()`
+
+- `int size()`
+
+- `boolean contains(Object o)`
+
+- `<T> T[] toArray(T[] a)`
+
+## *Set (Interface)*
+
+A collection that contains no duplicate elements. More formally, sets contain no pair of elements e1 and e2 such that e1.equals(e2), and at most one null element. As implied by its name, this interface models the mathematical set abstraction.
+
+- `boolean	add(E e)`
+  - `boolean	addAll(Collection<? extends E> c)`
+
+- `boolean remove(Object o)`
+  - `boolean	removeAll(Collection<?> c)`
+
+- `boolean contains(Object o)`
+  - `boolean	containsAll(Collection<?> c)`
+
+- `void clear()`
+
+- `int size()`
+
+- `boolean isEmpty()`
+
+- `<T> T[] toArray(T[] a)`
+
+## *HashSet (implement Set)*
+
+This class implements the Set interface, backed by a hash table (actually a HashMap instance). It makes no guarantees as to the iteration order of the set; in particular, it does not guarantee that the order will remain constant over time. This class permits the null element.
+
+- `Constructor`
+Can take `Collection<? extends E>` as parameters
+
+- `boolean	add(E e)`
+
+- `boolean remove(Object o)`
+
+- `boolean contains(Object o)`
+
+- `void clear()`
+
+- `int size()`
+
+- `boolean isEmpty()`
+
+## *TreeSet (implement SortedSet)*
+
+A NavigableSet implementation based on a TreeMap. The elements are ordered using their natural ordering, or by a Comparator provided at set creation time, depending on which constructor is used.
+
+- `Constructor`
+Can take `Collection<? extends E>`, `Comparator<? super E>` as parameters
+
+- `boolean add(E e)`
+  - `boolean addAll(Collection<? extends E> c)`
+
+- `E ceiling(E e)`Returns the least element in this set greater than or equal to the given element, or null if there is no such element.
+  - `E higher(E e)`greater
+  - `E floor(E e)`lower or equal
+  - `E lower(E e)`lower
+
+- `E pollFirst()`null if empty
+  - `E pollLast()`
+
+- `E first()`throw if empty
+  - `E last()`
+
+- `boolean remove(Object o)`
+
+- `boolean contains(Object o)`
+
+- `void clear()`
+
+- `int size()`
+
+- `boolean isEmpty()`
+
+## *Map (Interface)*
+
+An object that maps keys to values. A map cannot contain duplicate keys; each key can map to at most one value.
+
+- `V put(K key, V value)`
+  - `void putAll(Map<? extends K,? extends V> m)`
+  - `V putIfAbsent(K key, V value)`
+
+- `V remove(Object key)`
+  - `boolean	remove(Object key, Object value)`Removes the entry for the specified key only if it is currently mapped to the specified value.
+
+- `V get(Object key)`
+  - `V getOrDefault(Object key, V defaultValue)`
+
+- `V compute(K key, BiFunction<? super K,? super V,? extends V> remappingFunction)`Attempts to compute a mapping for the specified key and its current mapped value (or null if there is no current mapping).
+  - `V computeIfAbsent(K key, Function<? super K,? extends V> mappingFunction)`If the specified key is not already associated with a value (or is mapped to null), attempts to compute its value using the given mapping function and enters it into this map unless null.
+  - `V computeIfPresent(K key, BiFunction<? super K,? super V,? extends V> remappingFunction)`If the value for the specified key is present and non-null, attempts to compute a new mapping given the key and its current mapped value.
+
+- `Set<K> keySet()`
+- `Set<Map.Entry<K,V>> entrySet()`
+- `Collection<V> values()`
+
+
+- `boolean containsKey(Object key)`
+  - `boolean containsValue(Object value)`
+
+- `void forEach(BiConsumer<? super K,? super V> action)`Performs the given action for each entry in this map until all entries have been processed or the action throws an exception.
+
+- `void clear()`
+
+- `int size()`
+
+- `boolean isEmpty()`
+
+## *HashMap (implement Map)*
+
+Hash table based implementation of the Map interface. This implementation provides all of the optional map operations, and permits null values and the null key. (The HashMap class is roughly equivalent to Hashtable, except that it is unsynchronized and permits nulls.) This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order will remain constant over time.
+
+- `Constructor`
+Can take `Map<? extends K,? extends V>` as parameters
+
+- `V put(K key, V value)`
+  - `void putAll(Map<? extends K,? extends V> m)`
+  - `V putIfAbsent(K key, V value)`
+
+- `V remove(Object key)`
+  - `boolean remove(Object key, Object value)`
+
+- `V get(Object key)`
+  - `V getOrDefault(Object key, V defaultValue)`
+
+- `V compute(K key, BiFunction<? super K,? super V,? extends V> remappingFunction)`.
+  - `V computeIfAbsent(K key, Function<? super K,? extends V> mappingFunction)`
+  - `V computeIfPresent(K key, BiFunction<? super K,? super V,? extends V> remappingFunction)`
+
+- `Set<K> keySet()`
+- `Set<Map.Entry<K,V>> entrySet()`
+- `Collection<V> values()`
+
+- `boolean containsKey(Object key)`
+  - `boolean containsValue(Object value)`
+
+- `void forEach(BiConsumer<? super K,? super V> action)`
+
+- `void clear()`
+
+- `int size()`
+
+- `boolean isEmpty()`
+
+## *TreeMap (implement SortedSet)*
+
+A Red-Black tree based NavigableMap implementation. The map is sorted according to the natural ordering of its keys, or by a Comparator provided at map creation time, depending on which constructor is used.
+
+- `Constructor`
+Can take `Map<? extends K,? extends V>`, `Comparator<? super E>` as parameters
+
+- `V put(K key, V value)`
+  - `void putAll(Map<? extends K,? extends V> map)`
+
+- `boolean containsKey(Object key)`
+  - `boolean containsValue(Object value)`
+
+- `Set<K> keySet()`in key's order
+- `Set<Map.Entry<K,V>> entrySet()`in key's order
+- `Collection<V> values()`in key's order
+
+- `K ceilingKey(K key)`greter or equal
+  - `K higherKey(K key)`greater
+  - `K floorKey(K key)`lower or equal
+  - `K lowerKey(K key)`lower
+
+- `Map.Entry<K,V> ceilingEntry(K key)`greter or equal
+  - `Map.Entry<K,V> higherEntry(K key)`greater
+  - `Map.Entry<K,V> floorEntry(K key)`lower or equal
+  - `Map.Entry<K,V> lowerEntry(K key)`lower
+
+- `Map.Entry<K,V> pollFirstEntry()`null if empty
+  - `Map.Entry<K,V> pollLastEntry()`
+
+- `K firstKey()`throw if empty
+  - `K lastKey()`
+
+- `Map.Entry<K,V> firstEntry()`nullif empty
+  - `Map.Entry<K,V> lastEntry()`
+
+- `void forEach(BiConsumer<? super K,? super V> action)`
+
+- `void clear()`
+
+- `int size()`
+
+- `boolean isEmpty()`
+
+
+
 
 
