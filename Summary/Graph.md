@@ -271,7 +271,7 @@ class Solution
             //put new node in the queue
             for(var edge : graph[cur[0]]){
                 //if node has already been extract from the heap before, which means the distance to it is already the smallest, we don't need add any other edge that leads to it
-                if(!time.containsKey(edge[0])){
+                if(!distance.containsKey(edge[0])){
                     heap.add(new int[]{edge[0], edge[1] + cur[1]});
                 }
             }
