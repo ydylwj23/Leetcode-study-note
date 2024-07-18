@@ -43,7 +43,7 @@ String valueOf(int i): Returns the string representation of the int argument.
 #### non-static:
 ```
 int length(): Returns the length of this string.
-String[] split(String regex, int n): Splits this string around matches of the given regular expression. If n is non-positive then the pattern will be applied as many times as possible and the array can have any length. If n is zero then the pattern will be applied as many times as possible, the array can have any length, and trailing empty strings will be discarded.
+String[] split(String regex, int n): Splits this string around matches of the given regular expression. If n is non-positive then the pattern will be applied as many times as possible and the array can have any length. If n is zero then the pattern will be applied as many times as possible, the array can have any length, and trailing empty strings will be discarded. If n is < 0, trailer emtpy strings are preserved.
 String substring(int beginIndex, int endIndex): Returns a string that is a substring of this string.
 char[] toCharArray(): Converts this string to a new character array.
 int compareTo(String anotherString): Compares two strings lexicographically.
@@ -102,6 +102,7 @@ int[] copyOf(int[] original, int newLength): Copies the specified array, truncat
 void fill(int[] a, int val): Assigns the specified int value to each element of the specified array of ints.
 void sort(T[] a, Comparator<? super T> c): Sorts the specified array of objects according to the order induced by the specified comparator. (Note the array cannot be primitive to be sorted!!!)
 List<T> asList(T... a): Returns a fixed-size list backed by the specified array. (new ArrayList<T>(Arrays.asList(T... a)))
+IntStream stream(int[] arr): Returns a sequential IntStream with the specified array as its source.
 ```
 #### non-static:
 ```
@@ -177,7 +178,7 @@ boolean add(E e): Adds the specified element to this set if it is not already pr
 boolean contains(Object o): Returns true if this set contains the specified element.
 ```
 
-## java.util.TreeSet
+## java.util.TreeSet (Class)
 #### static:
 ```
 ```
@@ -217,7 +218,7 @@ Set<K> keySet(): Returns a Set view of the keys contained in this map.
 Collection<V> values(): Returns a Collection view of the values contained in this map.
 ```
 
-## java.util.TreeMap
+## java.util.TreeMap (Class)
 #### static:
 ```
 ```
@@ -249,6 +250,29 @@ Collection<V> values(): Returns a Collection view of the values contained in thi
 #### non-static:
 ```
 Stream<T> filter(Predicate<T> predicate): Returns a stream consisting of the elements of this stream that match the given predicate.
+```
+
+## java.util.stream.IntStream
+#### static:
+```
+```
+#### non-static:
+```
+long count(): Returns the count of elements in this stream.
+IntStream distinct(): Returns a stream consisting of the distinct elements of this stream.
+int sum(): Returns the sum of elements in this stream.
+OptionalInt	max(): Returns an OptionalInt describing the maximum element of this stream, or an empty optional if this stream is empty.
+OptionalInt	min(): Returns an OptionalInt describing the minimum element of this stream, or an empty optional if this stream is empty.
+int[] toArray(): Returns an array containing the elements of this stream.
+```
+
+## java.util.OptionalInt
+#### static:
+```
+```
+#### non-static:
+```
+int getAsInt(): If a value is present, returns the value, otherwise throws NoSuchElementException.
 ```
 
 ## Combination usage
