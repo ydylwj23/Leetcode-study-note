@@ -37,7 +37,10 @@ int intValue(): Returns the value of this Integer as an int.
 ## String
 #### static:
 ```
+boolean isEmpty(): Returns true if, and only if, length() is 0.
+String new String(String(char[] value)): Allocates a new String so that it represents the sequence of characters currently contained in the character array argument.
 String join(CharSequence delimiter, CharSequence... elements): Returns a new String composed of copies of the CharSequence elements joined together with a copy of the specified delimiter.
+String join(CharSequence delimiter, Iterable<? extends CharSequence> elements): Returns a new String composed of copies of the CharSequence elements joined together with a copy of the specified delimiter.
 String valueOf(int i): Returns the string representation of the int argument.
 ```
 #### non-static:
@@ -81,6 +84,8 @@ StringBuilder reverse(): Causes this character sequence to be replaced by the re
 ```
 #### non-static:
 ```
+double nextDouble(): Returns the next pseudorandom, uniformly distributed double value between 0.0 and 1.0 from this random number generator's sequence.
+int nextInt(): Returns the next pseudorandom, uniformly distributed int value from this random number generator's sequence.
 int nextInt(int bound): Returns a pseudorandom, uniformly distributed int value between 0 (inclusive) and the specified value (exclusive), drawn from this random number generator's sequence.
 ```
 
@@ -241,6 +246,7 @@ V put(K key, V value): Associates the specified value with the specified key in 
 V remove(Object key): Removes the mapping for a key from this map if it is present (optional operation).
 Set<K> keySet(): Returns a Set view of the keys contained in this map.
 Collection<V> values(): Returns a Collection view of the values contained in this map.
+NavigableMap<K, V> subMap(K fromKey, K toKey): Returns a view of the portion of this map whose keys range from fromKey, inclusive, to toKey, exclusive. fromKey to toKey.
 ```
 
 ## java.util.stream.Stream
@@ -281,7 +287,7 @@ int getAsInt(): If a value is present, returns the value, otherwise throws NoSuc
 int Arrays.stream(int[] a).max().getAsInt(): Get the max value of an int array.
 int Arrays.stream(int[] a).min().getAsInt(): Get the min value of an int array.
 int Arrays.stream(int[] a).sum(): Get the sum of an int array.
-List<Integer> Arrays.stream(int[] a).boxed().collect(Collectors.toList()): Convert int[] to List<Integer>
+List<Integer> Arrays.stream(int[] a).boxed().toList(): Convert int[] to List<Integer>
 ```
 #### non-static:
 ```
